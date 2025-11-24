@@ -1,0 +1,89 @@
+<p-toast></p-toast>
+
+<div class="transition-matrix-container">
+    <p-card>
+        <div class="header-section">
+            <div class="title-section">
+                <h2>Transition Matrix</h2>
+                <p class="period-label">{{currentMatrix?.year}} - {{getMonthName(currentMatrix?.month)}}</p>
+            </div>
+
+            <div class="controls-section">
+                <div class="filter-section">
+                    <form [formGroup]="filterForm" class="filter-form">
+                        <div class="filter-controls">
+                            <p-dropdown [options]="years" formControlName="year" placeholder="Select Year"
+                                [showClear]="false" (onChange)="onFilterChange()" styleClass="year-dropdown"
+                                [autoDisplayFirst]="false" appendTo="body">
+                            </p-dropdown>
+
+                            <p-dropdown [options]="months" formControlName="month" placeholder="Select Month"
+                                [showClear]="false" (onChange)="onFilterChange()" styleClass="month-dropdown"
+                                optionLabel="label" optionValue="value" [autoDisplayFirst]="false" appendTo="body">
+                            </p-dropdown>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="export-buttons">
+                    <p-button icon="pi pi-file-excel " (onClick)="exportExcel()"
+                        styleClass="p-button-success p-button-sm" pTooltip="Export as Excel" [disabled]="!hasData()"
+                        label="Excel">
+                    </p-button>
+                    <!-- <p-button icon="pi pi-file-pdf " (onClick)="exportPdf()" styleClass="p-button-danger p-button-sm"
+                        pTooltip="Export as PDF" [disabled]="!hasData()" label="PDF">
+                    </p-button> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="matrix-content">
+            <!-- Show table only if we have data -->
+            <ng-container *ngIf="!loading && hasData()">
+                <p-table [value]="[1,2,3,4]" styleClass="p-datatable-sm transition-matrix" responsiveLayout="stack">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="grade-header">From / To</th>
+                            <th *ngFor="let grade of [1,2,3,4]" class="grade-column">Grade {{grade}}</th>
+                            <th class="total-header">Total</th>
+                            <th class="pd-header">PD %</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-fromGrade>
+                        <tr>
+                            <td class="grade-label">Grade {{fromGrade}}</td>
+                            <td *ngFor="let toGrade of [1,2,3,4]"
+                                [style.background-color]="getCellColor(getMatrixData(fromGrade, toGrade), getMaxValue())"
+                                class="matrix-cell" [class.highlight]="fromGrade === toGrade">
+                                {{getMatrixData(fromGrade, toGrade) | number}}
+                            </td>
+                            <td class="total-cell">{{getRowStats(fromGrade)?.totalCount | number}}</td>
+                            <td class="pd-cell" [class.high-risk]="(getRowStats(fromGrade)?.pdPercent || 0) > 50">
+                                {{(getRowStats(fromGrade)?.pdPercent || 0) | number:'1.2-2'}}%
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-container>
+
+            <!-- Loading state -->
+            <div *ngIf="loading" class="loading-container">
+                <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+                <span class="loading-text">Loading data...</span>
+            </div>
+
+            <!-- No data message -->
+            <div *ngIf="!loading && !hasData()" class="no-data">
+                <div class="no-data-container">
+                    <div class="no-data-icon">
+                        <i class="pi pi-database"></i>
+                    </div>
+                    <div class="no-data-content">
+                        <h3>No data available for the selected period</h3>
+                        <p>Please select a different year or month to view the transition matrix.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-card>
+</div>

@@ -1,0 +1,23 @@
+<div *ngIf="formControl?.touched && formControl?.invalid" class="text-danger">
+   <div *ngIf="formControl?.errors?.['required']" class="text-dir">
+      <span> {{ "Itemrequired" | translate }} </span>
+   </div>
+   <div *ngIf="formControl?.errors?.['email']" class="text-dir">
+      {{ "EmailInvalid" | translate }}
+   </div>
+   <div *ngIf="formControl?.errors?.['minlength']">
+      {{ "ErrorMinlength" | translate : { length: minlength } }}
+   </div>
+   <div *ngIf="formControl?.errors?.['maxlength']">
+      {{ "ErrorMaxlength" | translate : { length: maxlength } }}
+   </div>
+   <div *ngIf="formControl?.errors?.['min']">
+      {{ "ErrorMin" | translate : { number: min } }}
+   </div>
+   <div *ngIf="formControl?.errors?.['max']">
+      {{ "ErrorMax" | translate : { number: max } }}
+   </div>
+   <div *ngIf="formControl?.errors?.['pattern']">
+      {{ patternKey && (patternKey | translate) }}
+   </div>
+</div>

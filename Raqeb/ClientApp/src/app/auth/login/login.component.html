@@ -1,0 +1,65 @@
+<div class="container-fluid p-0">
+   <div class="row d-flex flex-row-reverse">
+      <div class="col-12 col-md-7 p-0 d-none d-md-block" style="height: 100vh">
+         <img class="img-logo" src="../../../assets/images/login/LoginPage.jpg" alt="Login background" />
+      </div>
+      <div class="col-12 col-md-5">
+         <div class="login-card">
+            <div>
+               <div>
+                  <a class="logo" routerLink="/">
+                     <img class="img-fluid for-light" src="../../../assets/images/login/RaqebFavicon.png" width="200"
+                        alt="Raqeb logo" />
+                  </a>
+               </div>
+               <div class="login-main">
+                  <form class="theme-form"  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                     <!-- {{ loginForm.value | json }} -->
+                     <h4>{{ "Signintoaccount" | translate }}</h4>
+                     <p>{{ "Enteryouremailandpasswordtologin" | translate }}</p>
+
+                     <!-- Email Field -->
+                     <div class="form-group">
+                        <label class="col-form-label">{{ "EmailAddress" | translate }}</label>
+                        <input class="form-control" type="text" placeholder="{{ 'app@yourmail.com' | translate }}"
+                           formControlName="email" />
+                     </div>
+
+                     <!-- Password Field -->
+                     <div class="form-group">
+                        <label class="col-form-label">{{ "Password" | translate }}</label>
+                        <div class="position-relative">
+                           <input class="form-control" type="password" formControlName="password"
+                              placeholder="*********" />
+                        </div>
+                     </div>
+
+                     <!-- Submit Button -->
+                     <div class="form-group mb-0">
+                        <div class="mt-3">
+                           <button class="btn d-block w-100"
+                              style="background-color: #ff3300; color: white; font-weight: bold;" type="submit">
+                              <span *ngIf="!isLoading">{{ "Signin" | translate }}</span>
+                              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                           </button>
+                        </div>
+
+                        <!-- Language Selection -->
+                        <div class="mt-3 text-center">
+                           <div class="d-flex justify-content-center gap-2">
+                              <div *ngFor="let language of languages" style="cursor: pointer;">
+                                 <img (click)="onLanguageChange(language)" class="lang-icon"
+                                    [src]="language.icon || 'assets/images/dashboard/profile.png'"
+                                    [alt]="language.name || language.code" [title]="language.name || language.code"
+                                    style="width: 24px; height: 24px; object-fit: cover;" />
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

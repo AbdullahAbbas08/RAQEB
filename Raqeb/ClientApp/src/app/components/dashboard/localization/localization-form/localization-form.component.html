@@ -1,0 +1,66 @@
+<app-breadcrumb
+  [title]="'AddNewLocalization' | translate"
+  [items]="['Apps', 'Language']"
+  [active_item]="'Add New'"
+></app-breadcrumb>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <form class="theme-form" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-sm-12 py-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="form theme-form">
+              <div class="row pt-2">
+                <div class="col-12 form-group" [style.direction]="direction">
+                  <div class="">
+                    <h6>
+                      {{ "LocalizationCode" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="code"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'LocalizationCode' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('code')"
+                    ></app-print-error>
+                  </div>
+                </div>
+              </div>
+              <!-- Actions  -->
+              <div class="row pt-3 mt-3">
+                <div class="col">
+                  <div class="text-end">
+                    <button
+                      type="submit"
+                      class="btn btn-success me-3"
+                      [disabled]="form.invalid"
+                    >
+                      {{ "Save" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="Back()"
+                    >
+                      {{ "Cancel" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,71 @@
+<div class="odr-container" [@fadeIn]>
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="header-content">
+          <h3>
+            <i class="pi pi-chart-bar header-icon"></i>
+            Observed Default Rates
+          </h3>
+          <p class="subtitle">
+            <span class="badge">Historical Analysis</span>
+            Tracking default rates across time periods
+          </p>
+        </div>
+        <button pButton 
+                label="Export to Excel" 
+                icon="pi pi-file-excel" 
+                class="p-button-success export-btn" 
+                (click)="exportToExcel()" 
+                [disabled]="loading || !observedRates.length">
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <p-toast></p-toast>
+
+      <div class="loading-overlay" *ngIf="loading">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+      </div>
+
+      <div class="matrix-container" *ngIf="!loading && observedRates.length > 0" [@fadeIn]>
+        <div class="table-responsive">
+          <table class="observed-rates-table">
+            <thead>
+              <tr>
+                <th class="metric-header">Metric</th>
+                <th *ngFor="let rate of observedRates" class="year-header">
+                  {{ rate.year }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="metric-label">Default Rate (%)</td>
+                <td *ngFor="let rate of observedRates" 
+                    class="rate-cell"
+                    [class.high-risk]="isHighRisk(rate.observedDefaultRate)">
+                  {{ formatPercentage(rate.observedDefaultRate) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="no-data" *ngIf="!loading && !observedRates.length && !error" [@fadeIn]>
+          <!-- No data message -->
+              <div class="no-data-container">
+                  <div class="no-data-icon">
+                      <i class="pi pi-database"></i>
+                  </div>
+                  <div class="no-data-content">
+                      <h3>No data available for the selected period</h3>
+                      <p>Please select a different year or month to view the transition matrix.</p>
+                  </div>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>

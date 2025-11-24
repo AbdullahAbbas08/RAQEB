@@ -1,0 +1,292 @@
+<div class="calibration-container" [@fadeIn]>
+  <!-- <p-toast></p-toast> -->
+
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="title-section">
+        <div class="title-group">
+          <i class="pi pi-chart-line"></i>
+          <h2>PD Calibration Summaries</h2>
+        </div><br>
+        <span class="subtitle">Model Calibration Analysis & Results</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Section - Only show when data is available -->
+  <div class="content-section" *ngIf="!loading && hasData">
+    <div class="grid">
+      <!-- Key Metrics Card -->
+      <div class="col-12">
+        <div class="card key-metrics-card">
+          <div class="card-header">
+            <div class="header-left">
+              <i class="pi pi-chart-bar"></i>
+              <h3>Key Portfolio Metrics</h3>
+            </div>
+          </div>
+          <div class="metrics-grid" *ngIf="selectedSummary">
+            <div class="metric-item portfolio-pd">
+              <div class="metric-icon">
+                <i class="pi pi-percentage"></i>
+              </div>
+              <div class="metric-content">
+                <label>Portfolio PD</label>
+                <span class="metric-value">{{formatPercent(selectedSummary.portfolioPD)}}</span>
+              </div>
+            </div>
+            
+            <div class="metric-item total-count">
+              <div class="metric-icon">
+                <i class="pi pi-users"></i>
+              </div>
+              <div class="metric-content">
+                <label>Total Count</label>
+                <span class="metric-value">{{formatLargeNumber(selectedSummary.totalCount)}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parameters Card -->
+      <div class="col-12">
+        <div class="card parameters-card">
+          <div class="card-header">
+            <div class="header-left">
+              <i class="pi pi-sliders-h"></i>
+              <h3>Model Parameters</h3>
+            </div>
+            <div class="header-actions">
+              <button pButton 
+                      icon="pi pi-file-excel" 
+                      label="Export to Excel"
+                      class="p-button-outlined p-button-success export-btn"></button>
+            </div>
+          </div>
+          <div class="parameters-grid" *ngIf="selectedSummary">
+            <div class="parameter-item intercept-param">
+              <div class="parameter-icon">
+                <i class="pi pi-arrow-right-arrow-left"></i>
+              </div>
+              <div class="parameter-content">
+                <label>Intercept</label>
+                <span [class.negative]="selectedSummary.intercept < 0">
+                  {{selectedSummary.intercept | number:'1.2-2'}}
+                </span>
+              </div>
+              <div class="parameter-badge">β₀</div>
+            </div>
+            
+            <div class="parameter-item slope-param">
+              <div class="parameter-icon">
+                <i class="pi pi-chart-line"></i>
+              </div>
+              <div class="parameter-content">
+                <label>Slope</label>
+                <span [class.positive]="selectedSummary.slope > 0">
+                  {{selectedSummary.slope | number:'1.2-2'}}
+                </span>
+              </div>
+              <div class="parameter-badge">β₁</div>
+            </div>
+            
+            <div class="parameter-item calibrated-param">
+              <div class="parameter-icon">
+                <i class="pi pi-arrows-h"></i>
+              </div>
+              <div class="parameter-content">
+                <label>Calibrated Intercept</label>
+                <span [class.negative]="selectedSummary.cIntercept < 0">
+                  {{selectedSummary.cIntercept | number:'1.2-2'}}
+                </span>
+              </div>
+              <div class="parameter-badge">β₀'</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grades Table -->
+      <div class="col-12">
+        <div class="card grades-card">
+          <div class="card-header">
+            <div class="header-left">
+              <i class="pi pi-table"></i>
+              <h3>Grade Details</h3>
+            </div>
+            <div class="table-actions">
+              <span class="total-badge">
+                <i class="pi pi-users"></i>
+                Total Records: {{selectedSummary?.totalCount || 0}}
+              </span>
+            </div>
+          </div>
+          <div class="table-container">
+            <p-table [value]="selectedSummary?.grades || []" 
+                    [scrollable]="true" 
+                    styleClass="p-datatable-sm p-datatable-striped enhanced-table">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th class="grade-column">
+                    <div class="header-content">
+                      <i class="pi pi-star"></i>
+                      <span>Grade</span>
+                    </div>
+                  </th>
+                  <th class="odr-column">
+                    <div class="header-content">
+                      <i class="pi pi-chart-bar"></i>
+                      <span>ODR (%)</span>
+                    </div>
+                  </th>
+                  <th class="odds-column">
+                    <div class="header-content">
+                      <span>Ln Odds</span>
+                    </div>
+                  </th>
+                  <th class="fitted-column">
+                    <div class="header-content">
+                      <span>Fitted Ln Odds</span>
+                    </div>
+                  </th>
+                  <th class="pd-column">
+                    <div class="header-content">
+                      <i class="pi pi-percentage"></i>
+                      <span>Fitted PD (%)</span>
+                    </div>
+                  </th>
+                  <th class="calibrated-column">
+                    <div class="header-content">
+                      <span>Calibrated Ln Odds</span>
+                    </div>
+                  </th>
+                  <th class="cpd-column">
+                    <div class="header-content">
+                      <i class="pi pi-check-circle"></i>
+                      <span>Calibrated PD (%)</span>
+                    </div>
+                  </th>
+                  <th class="count-column">
+                    <div class="header-content">
+                      <i class="pi pi-database"></i>
+                      <span>Count</span>
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-grade let-rowIndex="rowIndex">
+                <tr [class.even-row]="rowIndex % 2 === 0" [class.odd-row]="rowIndex % 2 !== 0">
+                  <td class="grade-column">
+                    <span class="grade-badge" [class]="'grade-' + grade.grade">
+                      {{grade.grade}}
+                    </span>
+                  </td>
+                  <td class="odr-column">
+                    <div class="value-container">
+                      <span class="pd-value" [class.high-risk]="grade.odr > 50" [class.medium-risk]="grade.odr > 20 && grade.odr <= 50" [class.low-risk]="grade.odr <= 20">
+                        {{formatPercent(grade.odr)}}
+                      </span>
+                      <div class="progress-bar">
+                        <div class="progress-fill" [style.width.%]="grade.odr" [class.high-risk]="grade.odr > 50" [class.medium-risk]="grade.odr > 20 && grade.odr <= 50" [class.low-risk]="grade.odr <= 20"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="odds-column">
+                    <span [class.negative]="grade.lnOdds < 0" [class.positive]="grade.lnOdds >= 0">
+                      {{grade.lnOdds | number:'1.2-2'}}
+                    </span>
+                  </td>
+                  <td class="fitted-column">
+                    <span [class.negative]="grade.fittedLnOdds < 0" [class.positive]="grade.fittedLnOdds >= 0">
+                      {{grade.fittedLnOdds | number:'1.2-2'}}
+                    </span>
+                  </td>
+                  <td class="pd-column">
+                    <div class="value-container">
+                      <span class="pd-value" [class.high-risk]="grade.fittedPD > 50" [class.medium-risk]="grade.fittedPD > 20 && grade.fittedPD <= 50" [class.low-risk]="grade.fittedPD <= 20">
+                        {{formatPercent(grade.fittedPD)}}
+                      </span>
+                      <div class="progress-bar">
+                        <div class="progress-fill" [style.width.%]="grade.fittedPD" [class.high-risk]="grade.fittedPD > 50" [class.medium-risk]="grade.fittedPD > 20 && grade.fittedPD <= 50" [class.low-risk]="grade.fittedPD <= 20"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="calibrated-column">
+                    <span [class.negative]="grade.cFittedLnOdds < 0" [class.positive]="grade.cFittedLnOdds >= 0">
+                      {{grade.cFittedLnOdds | number:'1.2-2'}}
+                    </span>
+                  </td>
+                  <td class="cpd-column">
+                    <div class="value-container">
+                      <span class="pd-value calibrated" [class.high-risk]="grade.cFittedPD > 50" [class.medium-risk]="grade.cFittedPD > 20 && grade.cFittedPD <= 50" [class.low-risk]="grade.cFittedPD <= 20">
+                        {{formatPercent(grade.cFittedPD)}}
+                      </span>
+                      <div class="progress-bar">
+                        <div class="progress-fill calibrated" [style.width.%]="grade.cFittedPD" [class.high-risk]="grade.cFittedPD > 50" [class.medium-risk]="grade.cFittedPD > 20 && grade.cFittedPD <= 50" [class.low-risk]="grade.cFittedPD <= 20"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="count-column">
+                    <span class="count-badge">
+                      <i class="pi pi-chart-pie"></i>
+                      {{formatLargeNumber(grade.count)}}
+                    </span>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && !hasData && !error" [@fadeIn]>
+    <div class="empty-state-content">
+      <div class="empty-icon">
+        <i class="pi pi-inbox"></i>
+      </div>
+      <h2>No Calibration Data Available</h2>
+      <p>There are currently no calibration summaries in the system.</p>
+      <p class="empty-hint">Calibration data will appear here once it's been processed.</p>
+      <button pButton 
+              label="Refresh" 
+              icon="pi pi-refresh" 
+              class="p-button-outlined refresh-btn"
+              (click)="retryLoad()"></button>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="!loading && error" [@fadeIn]>
+    <div class="error-state-content">
+      <div class="error-icon">
+        <i class="pi pi-exclamation-triangle"></i>
+      </div>
+      <h2>Unable to Load Data</h2>
+      <p class="error-message">{{error}}</p>
+      <div class="error-actions">
+        <button pButton 
+                label="Try Again" 
+                icon="pi pi-refresh" 
+                class="p-button-outlined retry-btn"
+                (click)="retryLoad()"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-overlay" *ngIf="loading">
+    <div class="loading-spinner">
+      <p-progressSpinner strokeWidth="3"></p-progressSpinner>
+      <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <span class="loading-text">Loading Calibration Data...</span>
+  </div>
+</div>

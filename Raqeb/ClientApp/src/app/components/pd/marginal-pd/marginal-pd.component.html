@@ -1,0 +1,127 @@
+<div class="marginal-pd-container" [@fadeIn]>
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="header-content">
+          <h3>
+            <i class="pi pi-chart-bar header-icon"></i>
+            Marginal PD Analysis
+          </h3>
+          <p class="subtitle">
+            <span class="badge">Probability of Default</span>
+            Multi-scenario risk assessment across time periods
+          </p>
+        </div>
+        <button pButton 
+                label="Export to Excel" 
+                icon="pi pi-file-excel" 
+                class="p-button-success export-btn" 
+                (click)="exportToExcel()" 
+                [disabled]="loading || !hasData()">
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <p-toast></p-toast>
+
+      <div class="loading-overlay" *ngIf="loading">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tab-navigation" *ngIf="!loading && hasData()" [@fadeIn]>
+        <button 
+          class="tab-btn"
+          [class.active]="activeTab === 'base'"
+          (click)="setActiveTab('base')">
+          <i class="pi pi-chart-line tab-icon"></i>
+          <span class="tab-label">Base Scenario</span>
+          <span class="tab-indicator"></span>
+        </button>
+        <button 
+          class="tab-btn"
+          [class.active]="activeTab === 'best'"
+          (click)="setActiveTab('best')">
+          <i class="pi pi-arrow-up tab-icon"></i>
+          <span class="tab-label">Best Scenario</span>
+          <span class="tab-indicator"></span>
+        </button>
+        <button 
+          class="tab-btn"
+          [class.active]="activeTab === 'worst'"
+          (click)="setActiveTab('worst')">
+          <i class="pi pi-arrow-down tab-icon"></i>
+          <span class="tab-label">Worst Scenario</span>
+          <span class="tab-indicator"></span>
+        </button>
+      </div>
+
+      <!-- Table Content -->
+      <div class="matrix-container" *ngIf="!loading && hasData()" [@slideIn]>
+        <div class="table-responsive">
+          <table class="marginal-pd-table">
+            <thead>
+              <tr>
+                <th class="metric-header">Grades</th>
+                <th class="metric-header">BUK</th>
+                <th class="metric-header">TTC-PD</th>
+                <th class="metric-header">Asset Correlation</th>
+                <th class="pit-header" colspan="5">Point-in-Time PD (t+n)</th>
+              </tr>
+              <tr>
+                <th colspan="4"></th>
+                <th class="year-header">PIT-PD (t+1)</th>
+                <th class="year-header">PIT-PD (t+2)</th>
+                <th class="year-header">PIT-PD (t+3)</th>
+                <th class="year-header">PIT-PD (t+4)</th>
+                <th class="year-header">PIT-PD (t+5)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of getActiveData(); let i = index">
+                <td class="grade-cell">{{ row.grade }}</td>
+                <td class="buk-cell">{{ row.buk }}</td>
+                <td class="rate-cell">{{ row.ttC_PD }}</td>
+                <td class="rate-cell">{{ row.assetCorrelation }}</td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.piT_T1, 'piT_T1')">
+                  {{ row.piT_T1 }}
+                </td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.piT_T2, 'piT_T2')">
+                  {{ row.piT_T2 }}
+                </td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.piT_T3, 'piT_T3')">
+                  {{ row.piT_T3 }}
+                </td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.piT_T4, 'piT_T4')">
+                  {{ row.piT_T4 }}
+                </td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.piT_T5, 'piT_T5')">
+                  {{ row.piT_T5 }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- No Data Message -->
+      <div class="no-data" *ngIf="!loading && !hasData() && !error" [@fadeIn]>
+        <div class="no-data-container">
+          <div class="no-data-icon">
+            <i class="pi pi-database"></i>
+          </div>
+          <div class="no-data-content">
+            <h3>No data available</h3>
+            <p>Marginal PD data is currently unavailable. Please try again later.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

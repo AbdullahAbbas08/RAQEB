@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Logs\**" />
+	  <EmbeddedResource Remove="Logs\**" />
+	  <None Remove="Logs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Repositories\IPDRepository.Forcasting.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Repositories\IPDRepository.cs~RF58fc2410.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Repositories\IPDRepository.Forcasting.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EFCore.BulkExtensions" />
+		<PackageReference Include="EPPlus" />
+		<PackageReference Include="Hangfire.AspNetCore" />
+		<PackageReference Include="MathNet.Numerics" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<PackageReference Include="PdfSharpCore" />
+		<PackageReference Include="ReportViewerCore.NETCore" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+		<PackageReference Include="System.Linq.Dynamic.Core" />
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\EmailIntegration\EmailIntegration.csproj" />
+		<ProjectReference Include="..\Raqeb.DAL\Raqeb.DAL.csproj" />
+		<ProjectReference Include="..\Raqeb.Shared\Raqeb.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

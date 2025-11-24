@@ -1,0 +1,49 @@
+<!-- <div class="container-fluid">
+   <div class="page-title mb-0">
+      <div class="row">
+         <div class="col-6">
+            <h5>
+               {{ title | translate }}
+               <ng-container *ngIf="Site != null">
+                  |&nbsp; <span class="font-st">{{ Site.nameEn }}</span>
+               </ng-container>
+            </h5>
+            <ng-container *ngIf="Site != null">
+               <span class="font-st">{{ Site.outageStartDate | date }}</span>
+               |
+               <span class="font-bold">{{ "OutAgeScope" | translate }} : </span>
+               <span class="font-st">{{ Site.outScope }}</span>
+               | <span class="font-bold">{{ "NoOfEES" | translate }} : </span>
+               <sapn class="font-st">{{ Site.employeeNo }}</sapn>
+               | <span class="font-bold">{{ "ProjectId" | translate }} : </span>
+               <span class="font-st">{{ Site.projectId }}</span>
+               | <br />
+               <span class="font-bold">{{ "Duration" | translate }} : </span>
+               <span class="font-st">{{ Site.duration }}</span>
+               |
+               <span class="font-bold"
+                  >{{ "DaysofOutageStart" | translate }} :
+               </span>
+               <span class="font-st"
+                  >{{ Site.dayLeftOfOutage }} {{ "Month" | translate }}</span
+               >
+            </ng-container>
+         </div>
+         <div class="col-6">
+            <ol class="breadcrumb">
+               <li class="breadcrumb-item">
+                  <a [routerLink]="'/dashboard/default'">
+                     <app-svg-icon [icon]="'home'"></app-svg-icon>
+                  </a>
+               </li>
+               <li class="breadcrumb-item" *ngFor="let item of items">
+                  {{ item | translate }}
+               </li>
+               <li class="breadcrumb-item active">
+                  {{ active_item | translate }}
+               </li>
+            </ol>
+         </div>
+      </div>
+   </div>
+</div> -->

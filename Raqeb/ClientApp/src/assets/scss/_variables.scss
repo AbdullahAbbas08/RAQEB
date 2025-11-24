@@ -1,0 +1,42 @@
+:root {
+  --text-dark: #1a1a1a;
+  --text-black: #000000;
+  --text-grey: #333333;
+  --text-grey-2: #717171;
+  --text-grey-3: #b0b0b0;
+  --text-light: #ffffff;
+  --site-color-1: #007aff;
+  --site-color-2: #e7e5e4;
+  --site-color-3: #94a3b8;
+  --bg-grey: #dddddd;
+  --bg-dark: #2b2929;
+  --bg-light: #ffffff;
+  --success-color: #16a34a;
+  --primary-color: #1e6e48;
+  --Button-color: #1e6e48;
+  --sidebar-color: #1e6e48;
+  --danger-color: #ef4444;
+  --bg-input: #f2f2f2;
+  --input-border: #e5e5e5;
+  --input-placeholder: #808080;
+  --selected-node-color: #f1f5f9;
+  --bg-spinner-overlay: rgba(169, 169, 169, 0.412);
+}
+
+$sidebarWidth: 200px;
+
+@font-face {
+    font-family: "Bukra-Bold";
+    src: url("../fonts/fonts/29LTBukra-Bold.woff2") format("woff2");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Bukra Regular";
+    src: url("../fonts/fonts/29LTBukra-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap
+}

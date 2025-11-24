@@ -1,0 +1,202 @@
+<div class="row px-3 py-2">
+  <div class="col-12 card py-2 my-3">
+    <div class="row">
+      <div class="col-12 col-md-9">
+        <div class="row">
+          <!-- <div class="col-12 col-md-9 py-2 basic" [style.direction]="direction">
+            <input pInputText class="form-control py-3" type="text" [placeholder]="'SearchHere' | translate"
+              [formControl]="searchTermControl" />
+          </div> -->
+          <div class="col-12 col-md-9 py-2 basic" [style.direction]="direction">
+            <div class="input-group">
+              <input pInputText class="form-control py-3 search" type="text" [placeholder]="'SearchHere' | translate"
+                [formControl]="searchTermControl" />
+              <button class="btn gray px-1 py-2" (click)="clearSearch()">
+                {{'reset'|translate}}
+              </button>
+              <!-- <span class="cross" [ngClass]="{'left-align': direction === 'rtl', 'right-align': direction === 'ltr'}"
+                (click)="clearSearch()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </span> -->
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 card">
+    <!-- start ****************************************************************************** -->
+    <div class="main bg-white" style="overflow-y: auto">
+      <div class="row pt-4 mx-0" style="overflow-y: auto">
+        <!-- table -->
+        <div class="col-12">
+          <!-- [IsLoadingSpinner]="isLoading" -->
+          <div>
+            <p-table [value]="entities ? entities : []" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+              responsiveLayout="scroll">
+              <ng-template pTemplate="caption">
+                <div class="row pt-2" [style.direction]="direction">
+                  <div [style.direction]="direction"
+                    class="col-12 col-md-6 d-flex align-items-center justify-content-start px-2">
+                    <h3 class="font-bold">
+                      {{ "Customers" | translate }}
+                    </h3>
+                  </div>
+                  <div [style.direction]="direction"
+                    class="col-12 col-md-6 d-flex align-items-center justify-content-end px-2">
+                    <button class="btn btn-primary" [routerLink]="['/customer/create']">
+                      {{ "AddNew" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center">
+                      {{'index'|translate}}
+                    </div>
+                  </th>
+                  <th class="border-default">
+                    <div class="d-flex justify-content-center">
+                      {{ "Logo" | translate }}
+                    </div>
+                  </th>
+                  <th style="width:20% ;">
+                    <div class="d-flex justify-content-center">
+                      {{ "NameAr" | translate }}
+                    </div>
+                  </th>
+                  <th style="width:20% ;">
+                    <div class="d-flex justify-content-center">
+                      {{ "NameEn" | translate }}
+                    </div>
+                  </th>
+                  <th>
+                    <div class="d-flex justify-content-center">
+                      {{ "Phone" | translate }}
+                    </div>
+                  </th>
+                  <th>
+                    <div class="d-flex justify-content-center">
+                      {{ "email" | translate }}
+                    </div>
+                  </th>
+
+                  <th style="width:5% ;">
+                    <div class="d-flex justify-content-center">
+                      {{ "maxNumberOfSites" | translate }}
+                    </div>
+                  </th>
+                  <th style="width:5% ;">
+                    <div class="d-flex justify-content-center">
+                      {{ "NoActualSites" | translate }}
+                    </div>
+                  </th>
+
+                  <th>
+                    <div class="d-flex justify-content-center">
+                      {{ "Action" | translate }}
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-entity let-rowIndex="rowIndex">
+                <tr>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      {{ (page - 1) * pageSize + rowIndex + 1 }}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <img [src]="
+                          entityType(entity).logoBase64 ||
+                          'assets/images/dashboard/avatarperson.png'
+                        " class="user-profile" />
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      {{ entityType(entity).nameAr }}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      {{ entityType(entity).nameEn }}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      {{ entityType(entity).phone}}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      {{ entityType(entity).email}}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      {{ entityType(entity).maxNumberOfSites }}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      {{ entityType(entity).sitesCount ==0 ?'NoSitesFound': entityType(entity).sitesCount
+                      }}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <!-- <button class="btn btn-info mx-1" (click)="Confirm(entityType(entity)?.description)">
+                        {{ "Description" | translate }}
+                      </button>
+                      <button class="btn btn-primary" [routerLink]="[
+                          '/action-tracking/details',
+                          EncryptId(entityType(entity).id)
+                        ]">
+                        {{ "Details" | translate }}
+                      </button> -->
+                      <span class=" icon icon-edit " [routerLink]="[
+                      '/customer/edit',
+                      EncryptId(entityType(entity).id)
+                    ]">
+                        <i class="fa fa-pencil-square px-2 " aria-hidden="true"></i>
+                      </span>
+
+                      <span class="icon icon-delete ">
+                        <i class="fa fa-trash px-2 " aria-hidden="true" (click)="delete(entityType(entity).id)"></i>
+                      </span>
+
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+        <div class="col-12 d-flex justify-content-center my-5" *ngIf="count == 0">
+          <div class="alert alert-light">
+            <span>{{ "NoDataFound" | translate }}</span>
+          </div>
+        </div>
+      </div>
+      <!-- pagination -->
+      <div class="row p-0 m-0 mb-1 paginate" *ngIf="count != 0">
+        <div class="col-12 pb-5">
+          <p-paginator [rows]="pageSize" [totalRecords]="count" [rowsPerPageOptions]="pageSizeOptions"
+            (onPageChange)="getData($event)" [dropdownAppendTo]="'body'"></p-paginator>
+        </div>
+      </div>
+    </div>
+    <!-- end ****************************************************************************** -->
+  </div>
+</div>

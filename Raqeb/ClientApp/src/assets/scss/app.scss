@@ -1,0 +1,21 @@
+/* ---------------------
+ *** Vendors Scss ***
+-----------------------*/
+
+@import "vendors/chartist";
+@import "vendors/dropzone";
+@import "vendors/scrollable";
+@import "vendors/sticky";
+@import "vendors/todo";
+
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
+/* ---------------------
+	*** Theme Scss ***
+-----------------------*/
+@import "~animate.css/animate.min.css";
+@import "/node_modules/bootstrap/scss/bootstrap";
+@import "../scss/vendors/themify.scss";
+@import "style";
+@import "responsive";

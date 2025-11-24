@@ -1,0 +1,69 @@
+<div class="long-run-matrix-container" [@fadeIn]>
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="header-content">
+<h3>Long-Run Average Transition Matrix</h3>
+   <p class="subtitle">Global probability distribution across all time periods</p>
+        </div>
+        <button pButton 
+                label="Export to Excel" 
+     icon="pi pi-file-excel" 
+      class="p-button-success export-btn" 
+       (click)="exportExcel()" 
+ [disabled]="!hasData()">
+      </button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- <p-toast></p-toast> -->
+
+      <div class="matrix-container" *ngIf="hasData()" [@fadeIn]>
+        <table class="matrix-table">
+      <thead>
+ <tr>
+     <th class="header-cell matrix-corner">From/To</th>
+            <th class="header-cell" *ngFor="let i of [1,2,3,4]">Grade {{i}}</th>
+              <th class="header-cell total-header">Total</th>
+      <th class="header-cell pd-header">PD%</th>
+        </tr>
+          </thead>
+          <tbody>
+  <tr *ngFor="let fromGrade of [1,2,3,4]">
+   <td class="grade-cell">Grade {{fromGrade}}</td>
+            <td *ngFor="let toGrade of [1,2,3,4]" 
+         class="matrix-cell"
+     [style.background-color]="getCellColor(getMatrixData(fromGrade, toGrade), getMaxValue())"
+            [style.color]="getCellTextColor(getMatrixData(fromGrade, toGrade), getMaxValue())">
+           {{getMatrixData(fromGrade, toGrade) | number:'1.2-2'}}
+     </td>
+      <td class="total-cell">{{getRowStats(fromGrade)?.totalCount | number:'1.0-0'}}</td>
+   <td class="pd-cell">{{getRowStats(fromGrade)?.pdPercent | number:'1.1-1'}}%</td>
+            </tr>
+        <!-- Total Row -->
+      <tr class="total-row">
+              <td class="grade-cell">Total</td>
+     <td *ngFor="let total of getTotalRowData().totals" class="matrix-cell total-sum">
+    {{total | number:'1.0-0'}}
+            </td>
+              <td class="total-cell grand-total">{{getTotalRowData().grandTotal | number:'1.0-0'}}</td>
+           <td class="pd-cell">{{getTotalRowData().avgPD | number:'1.1-1'}}%</td>
+            </tr>
+      </tbody>
+        </table>
+</div>
+
+      <div class="no-data" *ngIf="!hasData()" [@fadeIn]>
+    <p-message severity="info" 
+      text="No data available for the selected period"
+    [style]="{ width: '100%' }">
+   </p-message>
+      </div>
+
+   <div class="loading-overlay" *ngIf="loading">
+    <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+      </div>
+    </div>
+  </div>
+</div>

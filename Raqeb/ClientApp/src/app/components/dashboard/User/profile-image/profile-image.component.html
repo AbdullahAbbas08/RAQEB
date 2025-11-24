@@ -1,0 +1,172 @@
+<app-breadcrumb
+  [title]="'UserProfileData' | translate"
+  [items]="['Apps']"
+  [active_item]="'ProfileData'"
+></app-breadcrumb>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <form class="theme-form" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-sm-12 py-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="form theme-form">
+              <div class="row pt-2">
+                <div class="col-12 py-3 form-group">
+                  <div class="quick-info d-flex align-items-center">
+                    <div class="user-image">
+                      <img [src]="getImageSrc()" class="img-fluid" />
+                      <span class="custom-upload-input">
+                        {{ "ChangePic" | translate }}
+                        <input
+                          #imageFile
+                          (change)="onSelect(imageFile.files)"
+                          type="file"
+                          accept=".jpg,.jpeg,.png,.gif"
+                        />
+                      </span>
+                      <i
+                        class="fa fa-times cross-icon"
+                        (click)="RemoveIamge()"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="col-12 col-md-6 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>{{ "SiteNameEn" | translate }}</h6>
+                    <input
+                      pInputText
+                      formControlName="nameEn"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'SiteNameEn' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('nameEn')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-6 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>{{ "SiteNameAr" | translate }}</h6>
+                    <input
+                      pInputText
+                      formControlName="nameAr"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'SiteNameAr' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('nameAr')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <!-- <div class="col-12 col-md-4 form-group" [style.direction]="direction">
+                           <div class="">
+                              <h6>{{ "Password" | translate }}</h6>
+                              <p-password formControlName="password" type="password" [toggleMask]="true"
+                                 placeholder="{{ 'Password' | translate }}" [style.direction]="direction"></p-password>
+                              <app-print-error [control]="form.get('password')"></app-print-error>
+                           </div>
+                        </div> -->
+                <div
+                  class="col-12 col-md-4 py-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>{{ "mobile" | translate }}</h6>
+                    <input
+                      pInputText
+                      formControlName="mobile"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'mobile' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('mobile')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-4 py-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>{{ "email" | translate }}</h6>
+                    <input
+                      pInputText
+                      formControlName="email"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'email' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('email')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-4 py-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>{{ "Customer" | translate }}</h6>
+                    <input
+                      formControlName="customerName"
+                      disabled
+                      readonly
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'Customer' | translate }}"
+                      [style.direction]="direction"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Actions  -->
+              <div class="row pt-3 mt-3">
+                <div class="col">
+                  <div class="text-end">
+                    <button
+                      type="submit"
+                      class="btn btn-success"
+                      [disabled]="form.invalid"
+                    >
+                      {{ "Save" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary mx-1"
+                      (click)="openChangePasswordModal()"
+                    >
+                      {{ "ChangePassword" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="Back()"
+                    >
+                      {{ "Cancel" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

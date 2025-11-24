@@ -1,0 +1,31 @@
+<ngx-loading-bar
+   [color]="'#7366ff'"
+   [includeSpinner]="false"
+   [height]="'4px'"
+></ngx-loading-bar>
+<app-loader></app-loader>
+<app-tap-to-top></app-tap-to-top>
+<router-outlet></router-outlet>
+
+<p-toast [position]="'top-right'"></p-toast>
+<!-- [position]="translate.currentLang === 'ar' ? 'top-right' : 'top-left'" -->
+
+<p-confirmDialog
+   #cd
+   [style]="{ width: '30vw' }"
+   [breakpoints]="{ '960px': '60vw', '640px': '90vw' }"
+   [dismissableMask]="true"
+   [header]="'حذف' | translate"
+   appendTo="body"
+   key="Confirm"
+   [closable]="false"
+>
+   <ng-template pTemplate="footer">
+      <button type="button" class="btn-v4 py-2 px-4" (click)="cd.accept()">
+         تأكيد
+      </button>
+      <button type="button" class="btn-v2 py-2 px-4" (click)="cd.reject()">
+         إلغاء
+      </button>
+   </ng-template>
+</p-confirmDialog>

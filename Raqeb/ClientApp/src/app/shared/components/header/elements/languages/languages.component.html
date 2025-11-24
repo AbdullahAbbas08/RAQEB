@@ -1,0 +1,32 @@
+<div class="translate_wrapper" [class.active]="navServices.language">
+   <div class="current_lang">
+      <div class="lang" style="background-color: #fff">
+         <img
+            class=""
+            [src]="
+               selectedLanguage?.icon || 'assets/images/dashboard/profile.png'
+            "
+            width="30"
+            height="20"
+            alt=""
+         />
+      </div>
+   </div>
+   <div class="more_lang" [class.active]="navServices.language">
+      <div
+         class="lang selected"
+         data-value="en"
+         (click)="changeLanguage(lang)"
+         *ngFor="let lang of languages"
+      >
+         <img
+            class=""
+            [src]="lang.icon || 'assets/images/dashboard/profile.png'"
+            width="30"
+            height="30"
+            alt=""
+         />
+         <span class="lang-txt">{{ lang.name }}</span>
+      </div>
+   </div>
+</div>

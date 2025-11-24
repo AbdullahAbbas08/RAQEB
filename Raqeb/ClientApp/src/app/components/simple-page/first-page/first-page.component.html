@@ -1,0 +1,149 @@
+<app-breadcrumb [title]="'LGD List'" [items]="['LGD']" [active_item]="'List'"></app-breadcrumb>
+<div class="container-fluid lgd-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card modern-card">
+        <div class="card-header-modern">
+          <div class="header-content">
+            <div class="header-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <div>
+              <h5 class="header-title">LGD Results Overview</h5>
+              <p class="header-subtitle">Loss Given Default Analysis</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-body modern-body">
+          <div class="mb-4" *ngIf="noResults">
+            <div class="alert-warning-custom">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <strong class="px-2">{{ message }}</strong>
+            </div>
+          </div>
+
+          <!-- <div class="mb-4" *ngIf="message && !noResults">
+            <div class="alert-info-custom">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg> &nbsp;&nbsp;
+              <span class="px-2">{{ message }}</span>123
+            </div>
+          </div> -->
+
+          <div class="version-controls mb-3" >
+            <label *ngIf="versions && versions.length" for="versionSelect" class="me-2">Version</label>
+            <select *ngIf="versions && versions.length" id="versionSelect" class="form-select d-inline-block w-auto me-2" (change)="onVersionChange($event.target.value)">
+              <option *ngFor="let v of versions" [value]="v" [selected]="v === selectedVersion">{{ v }}</option>
+            </select>
+            <button class="btn btn-outline-primary btn-sm me-2" (click)="reloadLatest()">Load</button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="loadVersions()">Refresh versions</button>
+            <span class="ms-3 text-muted" *ngIf="currentVersion">Showing version: <strong>{{ currentVersion }}</strong></span>
+          </div>
+
+          <div *ngIf="loading" class="loading-container">
+            <div class="modern-spinner">
+              <div class="spinner-ring"></div>
+              <div class="spinner-ring"></div>
+              <div class="spinner-ring"></div>
+            </div>
+            <div class="loading-text">Loading latest LGD results…</div>
+          </div>
+
+          <div *ngIf="error" class="alert alert-danger modern-alert" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+            <span class="px-2">{{ error }}</span>
+          </div>
+
+          <div *ngIf="!loading && !error" class="table-container">
+            <div class="table-wrapper">
+              <table class="table modern-table">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <div class="th-content">
+                        <span>Pool ID</span>
+                      </div>
+                    </th>
+                    <th scope="col">
+                      <div class="th-content">
+                        <span>Pool Name</span>
+                      </div>
+                    </th>
+                    <th scope="col" class="text-end">
+                      <div class="th-content">
+                        <span>EAD</span>
+                      </div>
+                    </th>
+                    <th scope="col" class="text-end">
+                      <div class="th-content">
+                        <span>Recovery Rate</span>
+                        <span class="unit">%</span>
+                      </div>
+                    </th>
+                    <th scope="col" class="text-end">
+                      <div class="th-content">
+                        <span>Unsecured LGD</span>
+                        <span class="unit">%</span>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of lgdData; trackBy: trackByPoolId" class="data-row">
+                    <td>
+                      <span class="pool-id-badge">{{ row.poolId }}</span>
+                    </td>
+                    <td>
+                      <span class="pool-name">{{ row.poolName }}</span>
+                    </td>
+                    <td class="text-end-custom">
+                      <span class="numeric-value">{{ row.ead | number:'1.0-0' }}</span>
+                    </td>
+                    <td class="text-end-custom">
+                      <span class="numeric-value">{{ row.recoveryRate | number:'1.2-2' }}</span>
+                    </td>
+                    <td class="text-end-custom">
+                      <span class="lgd-value" [ngClass]="{'negative': row.unsecuredLGD < 0, 'positive': row.unsecuredLGD >= 0}">
+                        <span class="value-indicator" [ngClass]="{'down': row.unsecuredLGD < 0, 'up': row.unsecuredLGD >= 0}">
+                          {{ row.unsecuredLGD < 0 ? '↓' : '↑' }}
+                        </span>
+                        {{ row.unsecuredLGD | number:'1.2-2' }}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="lgdData.length === 0" class="empty-row">
+                    <td colspan="5">
+                      <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M9 11l3 3L22 4"></path>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        <p>No LGD results available.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

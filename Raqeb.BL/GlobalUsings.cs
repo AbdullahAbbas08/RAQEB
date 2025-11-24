@@ -1,0 +1,9 @@
+﻿global using AutoMapper;
+global using Hangfire;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Raqeb.BL.Services;
+global using Raqeb.DAL.databaseContext;
+global using Raqeb.Shared.ViewModels;
+global using System;

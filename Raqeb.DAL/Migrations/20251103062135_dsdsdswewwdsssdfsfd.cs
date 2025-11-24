@@ -1,0 +1,41 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Raqeb.DAL.Migrations
+{
+    /// <inheritdoc />
+    public partial class dsdsdswewwdsssdfsfd : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "PDLongRunAverages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FromGrade = table.Column<int>(type: "int", nullable: false),
+                    ToGrade = table.Column<int>(type: "int", nullable: false),
+                    Count = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    YearCount = table.Column<int>(type: "int", nullable: false),
+                    AvgClients = table.Column<int>(type: "int", nullable: false),
+                    PDPercent = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PDLongRunAverages", x => x.Id);
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "PDLongRunAverages");
+        }
+    }
+}

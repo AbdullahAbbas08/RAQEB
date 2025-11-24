@@ -1,0 +1,193 @@
+.long-run-matrix-container {
+  padding: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(103, 58, 183, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 24px rgba(103, 58, 183, 0.15);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #673AB7 0%, #9C27B0 100%);
+    padding: 1.5rem;
+    color: white;
+
+    .header-content {
+      h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      .subtitle {
+        margin: 0.5rem 0 0;
+        opacity: 0.8;
+        font-size: 0.9rem;
+      }
+    }
+
+    .export-btn {
+      &:not(:disabled) {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    position: relative;
+  }
+}
+
+.matrix-container {
+  overflow-x: auto;
+  margin-top: 1rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+
+  th, td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E1BEE7;
+    transition: all 0.2s ease;
+  }
+
+  .header-cell {
+    background: #673AB7;
+    color: white;
+    font-weight: 500;
+    position: relative;
+    
+    &.matrix-corner {
+      background: #512DA8;
+    }
+
+    &.total-header {
+      background: #7E57C2;
+    }
+
+    &.pd-header {
+      background: #9C27B0;
+    }
+  }
+
+  .grade-cell {
+    background: #673AB7;
+    color: white;
+    font-weight: 500;
+  }
+
+  .matrix-cell {
+    transition: all 0.3s ease;
+    min-width: 80px;
+    position: relative;
+
+    &:hover {
+      transform: scale(1.05);
+      z-index: 1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .total-cell {
+    background: #EDE7F6;
+    font-weight: 600;
+    color: #512DA8;
+
+    &.grand-total {
+      background: #D1C4E9;
+      color: #4527A0;
+    }
+  }
+
+  .pd-cell {
+    background: #9C27B0;
+    color: white;
+    font-weight: 500;
+  }
+
+  .total-row {
+    .grade-cell {
+      background: #512DA8;
+    }
+
+    .total-sum {
+      background: #EDE7F6;
+      color: #512DA8;
+      font-weight: 600;
+    }
+  }
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  background: #F5F5F5;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+
+  ::ng-deep .p-progress-spinner {
+    width: 50px;
+    height: 50px;
+
+    circle {
+      stroke: #673AB7;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .card-header {
+    .header-content {
+      h3 {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .matrix-table {
+    font-size: 0.8rem;
+
+    th, td {
+      padding: 0.75rem;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11111.16 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raqeb", "Raqeb\Raqeb.csproj", "{3FDA8E65-13EF-4A65-81BD-75C9EF23159B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raqeb.BL", "Raqeb.BL\Raqeb.BL.csproj", "{8C772FE8-FF5F-4338-9384-C737B58E9B08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raqeb.DAL", "Raqeb.DAL\Raqeb.DAL.csproj", "{F5DC8C36-42AB-48DB-9306-D0B8D73BF6F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raqeb.Shared", "Raqeb.Shared\Raqeb.Shared.csproj", "{69161418-4E27-4DC2-AF90-C3AC5C2108AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailIntegration", "EmailIntegration\EmailIntegration.csproj", "{391422A0-2194-4CF4-B07E-266BAAEA992F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48ED8E8B-E750-4182-91C5-C9BD8FE79095}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FDA8E65-13EF-4A65-81BD-75C9EF23159B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FDA8E65-13EF-4A65-81BD-75C9EF23159B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FDA8E65-13EF-4A65-81BD-75C9EF23159B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FDA8E65-13EF-4A65-81BD-75C9EF23159B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C772FE8-FF5F-4338-9384-C737B58E9B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C772FE8-FF5F-4338-9384-C737B58E9B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C772FE8-FF5F-4338-9384-C737B58E9B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C772FE8-FF5F-4338-9384-C737B58E9B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5DC8C36-42AB-48DB-9306-D0B8D73BF6F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5DC8C36-42AB-48DB-9306-D0B8D73BF6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5DC8C36-42AB-48DB-9306-D0B8D73BF6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5DC8C36-42AB-48DB-9306-D0B8D73BF6F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69161418-4E27-4DC2-AF90-C3AC5C2108AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69161418-4E27-4DC2-AF90-C3AC5C2108AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69161418-4E27-4DC2-AF90-C3AC5C2108AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69161418-4E27-4DC2-AF90-C3AC5C2108AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{391422A0-2194-4CF4-B07E-266BAAEA992F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{391422A0-2194-4CF4-B07E-266BAAEA992F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391422A0-2194-4CF4-B07E-266BAAEA992F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{391422A0-2194-4CF4-B07E-266BAAEA992F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F10E2E58-EF86-4D04-B5B0-AD924D4A38A2}
+	EndGlobalSection
+EndGlobal

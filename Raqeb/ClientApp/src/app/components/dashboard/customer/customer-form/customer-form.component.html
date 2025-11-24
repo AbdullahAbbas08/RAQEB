@@ -1,0 +1,194 @@
+<app-breadcrumb
+  [title]="'AddNewCustomer' | translate"
+  [items]="['Apps', 'Customer']"
+  [active_item]="'Add New'"
+></app-breadcrumb>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <form class="theme-form" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-sm-12 py-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="form theme-form">
+              <div class="row pt-2">
+                <div class="col-12 py-3 form-group">
+                  <div class="quick-info d-flex align-items-center">
+                    <div class="user-image">
+                      <img [src]="getImageSrc()" class="img-fluid" />
+                      <span class="custom-upload-input">
+                        {{ "ChangePic" | translate }}
+                        <input
+                          #imageFile
+                          (change)="onSelect(imageFile.files)"
+                          type="file"
+                          accept=".jpg,.jpeg,.png,.gif"
+                        />
+                      </span>
+                      <i
+                        class="fa fa-times cross-icon"
+                        (click)="RemoveIamge()"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="col-12 col-md-6 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "SiteNameEn" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="nameEn"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'SiteNameEn' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('nameEn')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-6 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "SiteNameAr" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="nameAr"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'SiteNameAr' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('nameAr')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-4 py-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "mobile" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="phone"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'phone' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('phone')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-4 py-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "email" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="email"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'email' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('email')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-4 py-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "maxNumberOfSites" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="maxNumberOfSites"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'maxNumberOfSites' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('maxNumberOfSites')"
+                    ></app-print-error>
+                  </div>
+                </div>
+
+                <div class="row pt-3 mt-3">
+                  <div class="col">
+                    <div class="text-end">
+                      <button
+                        type="submit"
+                        class="btn btn-success me-3"
+                        [disabled]="form.invalid"
+                      >
+                        {{ "Save" | translate }}
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="Back()"
+                      >
+                        {{ "Cancel" | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

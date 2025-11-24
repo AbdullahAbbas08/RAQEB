@@ -1,0 +1,143 @@
+<app-breadcrumb
+  [title]="'AddNewLanguage' | translate"
+  [items]="['Apps', 'Language']"
+  [active_item]="'Add New'"
+></app-breadcrumb>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <form class="theme-form" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-sm-12 py-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="form theme-form">
+              <div class="row pt-2">
+                <div class="col-12 py-3 form-group">
+                  <div class="quick-info d-flex align-items-center">
+                    <div class="user-image">
+                      <img [src]="getImageSrc()" class="img-fluid" />
+                      <span class="custom-upload-input">
+                        {{ "ChangePic" | translate }}
+                        <input
+                          #imageFile
+                          (change)="onSelect(imageFile.files)"
+                          type="file"
+                          accept=".jpg,.jpeg,.png,.gif"
+                        />
+                      </span>
+                      <i
+                        class="fa fa-times cross-icon"
+                        (click)="RemoveIamge()"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="col-12 col-md-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "Title" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="name"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'Title' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('name')"
+                    ></app-print-error>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "LangCode" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="code"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'LangCode' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('code')"
+                    ></app-print-error>
+                  </div>
+                </div>
+
+                <div
+                  class="col-12 col-md-4 form-group"
+                  [style.direction]="direction"
+                >
+                  <div class="">
+                    <h6>
+                      {{ "direction" | translate }}
+                      <span
+                        class="px-2"
+                        style="color: red; font-weight: bold; font-size: 20px"
+                        >*</span
+                      >
+                    </h6>
+                    <input
+                      pInputText
+                      formControlName="direction"
+                      class="form-control"
+                      type="text"
+                      placeholder="{{ 'direction' | translate }}"
+                      [style.direction]="direction"
+                    />
+                    <app-print-error
+                      [control]="form.get('direction')"
+                    ></app-print-error>
+                  </div>
+                </div>
+              </div>
+              <!-- Actions  -->
+              <div class="row pt-3 mt-3">
+                <div class="col">
+                  <div class="text-end">
+                    <button
+                      type="submit"
+                      class="btn btn-success me-3"
+                      [disabled]="form.invalid"
+                    >
+                      {{ "Save" | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="Back()"
+                    >
+                      {{ "Cancel" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
