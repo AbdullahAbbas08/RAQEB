@@ -23,11 +23,6 @@
 
         public DateTime FacilityStartDate { get; set; }
 
-        public decimal? OutstandingBalanceCredit { get; set; }
-        public decimal? CurrentProvisionLevelPercent { get; set; }
-        public decimal? CurrentProvisionAmount { get; set; }
-        public string ProvisionType { get; set; }
-
         // 🔵 NEW FIELDS — Risk Grades
         public int InitialRiskGrade { get; set; }
         public int CurrentRiskGrade { get; set; }

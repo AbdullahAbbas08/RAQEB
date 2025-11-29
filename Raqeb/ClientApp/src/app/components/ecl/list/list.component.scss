@@ -449,7 +449,7 @@
 }
 
 .loading-overlay {
-  position: absolute;
+  position: fixed; // غيرها من absolute لـ fixed
   top: 0;
   left: 0;
   right: 0;
@@ -458,7 +458,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999; // زود الـ z-index عشان يكون فوق كل حاجة
   backdrop-filter: blur(8px);
 }
 
@@ -1056,5 +1056,21 @@
         }
       }
     }
+  }
+}
+
+
+.ecl-container {
+  padding: 1.5rem;
+  position: relative; 
+  
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    position: relative; // أضف ده كمان
+    
   }
 }

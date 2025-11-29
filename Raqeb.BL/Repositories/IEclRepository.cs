@@ -25,7 +25,7 @@ namespace Raqeb.BL.Repositories
         Task<(List<EclStageSummary>, List<EclGradeSummary>)> CalculateEclSummaryAsync();
         Task<List<EclStageSummary>> GetEclStageSummaryAsync();
         Task<List<EclGradeSummary>> GetEclGradeSummaryAsync();
-         Task<PaginatedResponse<CustomerWithStage>> GetCustomersWithStagePaginatedAsync(CustomerStageFilterRequest req);
+        Task<PaginatedResponse<CustomerWithStage>> GetCustomersWithStagePaginatedAsync(CustomerStageFilterRequest req);
     }
 
     public class EclRepository : IEclRepository
@@ -236,6 +236,31 @@ namespace Raqeb.BL.Repositories
 
         #region Read from Excel (EPPlus)
 
+        decimal ParseAccounting(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input) || input.Trim() == "-")
+                return 0;
+
+            input = input.Trim();
+
+            bool isNegative = false;
+
+            // لو القيمة بين قوسين يبقى الرقم سالب
+            if (input.StartsWith("(") && input.EndsWith(")"))
+            {
+                isNegative = true;
+                input = input.Trim('(', ')');
+            }
+
+            // شيل أي فواصل
+            input = input.Replace(",", "");
+
+            if (decimal.TryParse(input, out decimal result))
+                return isNegative ? -result : result;
+
+            return 0;
+
+        }
         // Sheet: ECL Input Data
         public async Task<List<EclCustomerInput>> ReadCustomerSheetAsync(ExcelWorksheet ws)
         {
@@ -309,7 +334,10 @@ namespace Raqeb.BL.Repositories
                     continue;
 
                 // Raw values
-                int outstanding = (int)Math.Ceiling(Math.Abs(ParseDecimal(ws.Cells[row, 3].Text)));
+                decimal val = ParseAccounting(ws.Cells[row, 14].Text);
+                decimal outstanding = (decimal)Math.Abs(val);
+
+                //int outstanding = (int)Math.Abs(ParseDecimal(ws.Cells[row, 14].Text));
                 decimal creditLimit = ParseDecimal(ws.Cells[row, 2].Text);
                 decimal scoreOrig = ParseDecimal(ws.Cells[row, 6].Text);
                 decimal scoreCurr = ParseDecimal(ws.Cells[row, 7].Text);
@@ -351,6 +379,10 @@ namespace Raqeb.BL.Repositories
                     ccf.CcfWeightedAvg
                 );
 
+                //if (int.Parse(ws.Cells[row, 1].Text) == 175213)
+                //{
+                //    Console.WriteLine();
+                //}
                 // Resolve PD rows with Final-Stage logic
                 var pdBaseRow = ResolvePdRow(finalStage, bukGrade, buk, baseLookup);
                 var pdBestRow = ResolvePdRow(finalStage, bukGrade, buk, bestLookup);
@@ -366,13 +398,15 @@ namespace Raqeb.BL.Repositories
                 decimal totalBest = 0;
                 decimal totalWorst = 0;
 
+                var ff = int.Parse(ws.Cells[row, 1].Text);
                 // store per-year scenario ECL
                 decimal[] baseYears = new decimal[5];
                 decimal[] bestYears = new decimal[5];
                 decimal[] worstYears = new decimal[5];
 
-                for (int t = 1; t <= 5; t++)
+                if (finalStage == "Stage 1" || finalStage == "Stage 3")
                 {
+                    int t = 1;
                     decimal ead_t = eads[t - 1];
                     decimal df = (decimal)Math.Pow((double)(1 + discountRate), t);
 
@@ -384,6 +418,25 @@ namespace Raqeb.BL.Repositories
                     totalBest += bestYears[t - 1];
                     totalWorst += worstYears[t - 1];
                 }
+                else
+                {
+                    for (int t = 1; t <= 5; t++)
+                    {
+
+
+                        decimal ead_t = eads[t - 1];
+                        decimal df = (decimal)Math.Pow((double)(1 + discountRate), t);
+
+                        baseYears[t - 1] = ead_t * lgd * pdsBase[t - 1] / df;
+                        bestYears[t - 1] = ead_t * lgd * pdsBest[t - 1] / df;
+                        worstYears[t - 1] = ead_t * lgd * pdsWorst[t - 1] / df;
+
+                        totalBase += baseYears[t - 1];
+                        totalBest += bestYears[t - 1];
+                        totalWorst += worstYears[t - 1];
+                    }
+                }
+                   
 
                 // Add Customer
                 var item = new EclCustomerInput
@@ -398,17 +451,12 @@ namespace Raqeb.BL.Repositories
                     ScoreAtReporting = scoreCurr,
 
                     DPD = dpd,
-                    PoolId = 1, // enforce
+                    PoolId = 1,
 
                     Sector = ws.Cells[row, 9].Text,
                     Group = ws.Cells[row, 10].Text,
 
                     FacilityStartDate = DateTime.Parse(ws.Cells[row, 12].Text),
-                    OutstandingBalanceCredit = obc,
-
-                    CurrentProvisionLevelPercent = TryDec(ws.Cells[row, 16].Text),
-                    CurrentProvisionAmount = TryDec(ws.Cells[row, 17].Text),
-                    ProvisionType = ws.Cells[row, 18].Text,
 
                     InitialRiskGrade = origGrade,
                     CurrentRiskGrade = currGrade,
@@ -1206,8 +1254,7 @@ namespace Raqeb.BL.Repositories
                     out var val))
             {
                 // 0.63 → 0.0063 لو جايّة كنسبة مئوية عادية
-                if (val > 1) return val / 100m;
-                return val;
+                return val / 100m;
             }
 
             return 0m;

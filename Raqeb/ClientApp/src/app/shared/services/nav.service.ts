@@ -81,7 +81,7 @@ export class NavService implements OnDestroy {
 
   MENUITEMS: Menu[] = [
     {
-      headTitle1: "GENERAL",
+      headTitle1: "Risk Parameters",
       headTitle2: "ReadyToUseApps",
     },
     {
