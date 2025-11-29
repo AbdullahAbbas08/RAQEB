@@ -14,6 +14,10 @@ export const content: Routes = [
     loadChildren: () => import("../../components/pd/pd.module").then((m) => m.PDModule),
   },
   {
+    path: "ecl",
+    loadChildren: () => import("../../components/ecl/ecl.module").then((m) => m.EclModule),
+  },
+  {
     path: "customer",
     loadChildren: () => import("../../components/dashboard/customer/customer.module").then((m) => m.CustomerModule),
   },

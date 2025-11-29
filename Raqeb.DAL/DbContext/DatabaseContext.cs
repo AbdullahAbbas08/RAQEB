@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Raqeb.Shared.Models;
+using Raqeb.Shared.Models.ECL;
 using Raqeb.Shared.Models.Raqeb.Shared.Models;
 using Raqeb.Shared.ViewModels.DTOs;
 using System.Linq.Expressions;
@@ -42,6 +43,21 @@ namespace Raqeb.DAL.databaseContext
 
         public DbSet<MacroScenarioValue> MacroScenarioValues { get; set; }
         public DbSet<MacroScenarioIndex> MacroScenarioIndices { get; set; }
+
+
+
+        //ECL Summery
+        public DbSet<EclCustomerInput> EclCustomers { get; set; }
+        public DbSet<EclCcfInput> ECL_CCF { get; set; }
+        public DbSet<EclMacroeconomicInput> EclMacroeconomics { get; set; }
+        public DbSet<EclSicrMatrixInput> EclSicrMatrixs { get; set; }
+        public DbSet<EclCureRateInput> EclCureRates { get; set; }
+        public DbSet<EclScoreGrade> EclScoreGrades { get; set; }
+        public DbSet<EclDpdBucket> EclDpdBuckets { get; set; }
+        public DbSet<EclScenarioWeight> EclScenarioWeights { get; set; }
+        public DbSet<EclGradeSummary> EclGradeSummary { get; set; }
+        public DbSet<EclStageSummary> EclStageSummary { get; set; }
+
 
 
         public virtual DbSet<User> Users { get; set; }

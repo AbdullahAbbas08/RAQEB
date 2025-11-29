@@ -1,0 +1,206 @@
+<div class="ecl-container" [@fadeIn]>
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="header-content">
+          <h3>
+            <i class="pi pi-chart-bar header-icon"></i>
+            ECL Summary Analysis
+          </h3>
+          <p class="subtitle">
+            <span class="badge">Expected Credit Loss</span>
+            <span class="badge pool-badge" [class.active-pool]="selectedPool === 'pool1'">
+              <i class="pi pi-database"></i>
+              {{ getPoolLabel() }}
+            </span>
+            Stage and Grade-based risk assessment
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- <p-toast></p-toast> -->
+
+      <div class="loading-overlay" *ngIf="loading">
+        <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+      </div>
+
+      <!-- Pool Selection -->
+      <div class="pool-selector" *ngIf="!loading" [@fadeIn]>
+        <div class="pool-selector-header">
+          <i class="pi pi-filter"></i>
+          <span>Select Pool</span>
+        </div>
+        <div class="pool-buttons">
+          <button 
+            *ngFor="let pool of pools"
+            class="pool-btn"
+            [class.active]="selectedPool === pool.value"
+            [class.no-data]="!pool.hasData"
+            (click)="selectPool(pool.value)">
+            <i class="pi pi-database"></i>
+            <span class="pool-label">{{ pool.label }}</span>
+            <span class="pool-status" *ngIf="pool.hasData">
+              <i class="pi pi-check-circle"></i>
+            </span>
+            <span class="pool-status no-data-icon" *ngIf="!pool.hasData">
+              <i class="pi pi-times-circle"></i>
+            </span>
+          </button>
+          <button 
+            class="pool-btn total-pool"
+            [class.active]="selectedPool === 'total'"
+            (click)="selectPool('total')">
+            <i class="pi pi-chart-pie"></i>
+            <span class="pool-label">Total Pools</span>
+            <span class="pool-status">
+              <i class="pi pi-check-circle"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="summary-cards" *ngIf="!loading && hasData()" [@fadeIn]>
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="pi pi-dollar"></i>
+          </div>
+          <div class="summary-content">
+            <h4>Total Outstanding</h4>
+            <p class="summary-value">{{ formatNumber(getTotalOutstanding()) }}</p>
+            <span class="pool-indicator">{{ getPoolLabel() }}</span>
+          </div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon ecl-icon">
+            <i class="pi pi-exclamation-triangle"></i>
+          </div>
+          <div class="summary-content">
+            <h4>Total ECL</h4>
+            <p class="summary-value">{{ formatNumber(getTotalEcl()) }}</p>
+            <span class="pool-indicator">{{ getPoolLabel() }}</span>
+          </div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon ratio-icon">
+            <i class="pi pi-percentage"></i>
+          </div>
+          <div class="summary-content">
+            <h4>Average Loss Ratio</h4>
+            <p class="summary-value">{{ formatPercentage(getAverageLossRatio()) }}</p>
+            <span class="pool-indicator">{{ getPoolLabel() }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tab-navigation" *ngIf="!loading && hasData()" [@fadeIn]>
+        <button 
+          class="tab-btn"
+          [class.active]="activeTab === 'stage'"
+          (click)="setActiveTab('stage')">
+          <i class="pi pi-sitemap tab-icon"></i>
+          <span class="tab-label">Stage Summary</span>
+          <span class="tab-indicator"></span>
+        </button>
+        <button 
+          class="tab-btn"
+          [class.active]="activeTab === 'grade'"
+          (click)="setActiveTab('grade')">
+          <i class="pi pi-star tab-icon"></i>
+          <span class="tab-label">Grade Summary</span>
+          <span class="tab-indicator"></span>
+        </button>
+      </div>
+
+      <!-- Stage Summary Table -->
+      <div class="matrix-container" *ngIf="!loading && hasData() && activeTab === 'stage'" [@slideIn]>
+        <div class="table-header-info">
+          <div class="pool-info-badge">
+            <i class="pi pi-info-circle"></i>
+            Displaying data for {{ getPoolLabel() }}
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="ecl-table">
+            <thead>
+              <tr>
+                <th class="metric-header">Stage</th>
+                <th class="metric-header">Outstanding</th>
+                <th class="metric-header">ECL</th>
+                <th class="metric-header">Loss Ratio</th>
+                <th class="metric-header">OS Contribution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of stageSummary">
+                <td class="stage-cell">{{ row.stage }}</td>
+                <td class="value-cell">{{ formatNumber(row.outstanding) }}</td>
+                <td class="value-cell ecl-value">{{ formatNumber(row.ecl) }}</td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.lossRatio, 'lossRatio')">
+                  {{ formatPercentage(row.lossRatio) }}
+                </td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.osContribution, 'osContribution')">
+                  {{ formatPercentage(row.osContribution) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Grade Summary Table -->
+      <div class="matrix-container" *ngIf="!loading && hasData() && activeTab === 'grade'" [@slideIn]>
+        <div class="table-header-info">
+          <div class="pool-info-badge">
+            <i class="pi pi-info-circle"></i>
+            Displaying data for {{ getPoolLabel() }}
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="ecl-table">
+            <thead>
+              <tr>
+                <th class="metric-header">Grade</th>
+                <th class="metric-header">Outstanding</th>
+                <th class="metric-header">ECL</th>
+                <th class="metric-header">Loss Ratio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of gradeSummary">
+                <td class="grade-cell">Grade {{ row.grade }}</td>
+                <td class="value-cell">{{ formatNumber(row.outstanding) }}</td>
+                <td class="value-cell ecl-value">{{ formatNumber(row.ecl) }}</td>
+                <td class="rate-cell" 
+                    [class.high-risk]="isHighRisk(row.lossRatio, 'lossRatio')">
+                  {{ formatPercentage(row.lossRatio) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- No Data Message -->
+      <div class="no-data" *ngIf="!loading && !hasData() && !error" [@fadeIn]>
+        <div class="no-data-container">
+          <div class="no-data-icon">
+            <i class="pi pi-database"></i>
+          </div>
+          <div class="no-data-content">
+            <h3>No Data Available</h3>
+            <p>ECL data for {{ getPoolLabel() }} is currently unavailable.</p>
+            <p class="no-data-hint">Please select another pool or try again later.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

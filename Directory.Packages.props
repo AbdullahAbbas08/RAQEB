@@ -36,9 +36,11 @@
     <!-- أدوات ومكتبات -->
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.61.3" />
+    <PackageVersion Include="Microsoft.Office.Interop.Excel" Version="16.0.18925.20022" />
     <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
+    <PackageVersion Include="Sylvan.Data.Excel" Version="0.5.2" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageVersion Include="System.DirectoryServices" Version="8.0.0" />
     <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />

@@ -144,6 +144,40 @@
                     </div>
                 </div>
             </ng-container>
+            <ng-container *ngIf="Type === 'ECL'">
+                <div class="dropzone"
+                     [class.active]="selectedFile"
+                     [class.disabled]="uploading">
+                    <input type="file"
+                           class="file-input"
+                           id="fileInput"
+                           (change)="onFileSelected($event)"
+                           [disabled]="uploading"
+                           accept=".xlsx,.xlsm,.xls">
+
+                    <div class="upload-placeholder" *ngIf="!selectedFile">
+                        <i class="fa fa-cloud-upload"></i>
+                        <h3>Drop your Excel file here</h3>
+                        <p>or</p>
+                        <button class="browse-btn">Browse Files</button>
+                        <div class="file-types">Supported formats: .xlsx, .xlsm, .xls</div>
+                    </div>
+                    <div class="file-selected" *ngIf="selectedFile">
+                        <div class="file-preview">
+                            <i class="fa fa-file-excel-o file-icon"></i>
+                            <div class="file-details">
+                                <h4>{{ selectedFile.name }}</h4>
+                                <p>{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+                            </div>
+                            <button class="remove-file"
+                                    *ngIf="!uploading"
+                                    (click)="selectedFile = null">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
 
             <div class="action-section">
                 <button class="calculate-btn"

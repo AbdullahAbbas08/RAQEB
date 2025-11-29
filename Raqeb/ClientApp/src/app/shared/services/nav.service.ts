@@ -92,8 +92,8 @@ export class NavService implements OnDestroy {
       // badgeValue: "New",
       active: true,
       children: [
-        { path: "/LGD/list", title: "LGDList", type: "link" },
-         { path: "/LGD/form", title: "CreateLGD", type: "link" },
+        { path: "/LGD/list", title: "LGD Results", type: "link" },
+         { path: "/LGD/form", title: "Upoad LGD File", type: "link" },
       ],
     },
     {
@@ -105,13 +105,26 @@ export class NavService implements OnDestroy {
       active: true,
       children: [
         // { path: "/PD/list", title: "PD List", type: "link" },
-        { path: "/PD/form", title: "Create PD", type: "link" },
+        { path: "/PD/form", title: "Upload PD Files", type: "link" },
         { path: "/PD/display-transition-matrix", title: "Transition Matrix", type: "link" },
         { path: "/PD/yearly-avg-transition-matrix", title: "Yearly Avg Transition Matrix", type: "link" },
         { path: "/PD/long-run-matrix", title: "Long Run Matrix", type: "link" },
         { path: "/PD/odr", title: "Observed DR", type: "link" },
         { path: "/PD/calibration-summaries", title: "Calibration Summaries", type: "link" },
-        { path: "/PD/marginal-pd", title: "Marginal PD", type: "link" },
+        { path: "/PD/marginal-pd", title: "Marginal PD Results", type: "link" },
+      ],
+    },
+     {
+      title: "ECL",
+      icon: "widget",
+      type: "sub",
+      badgeType: "light-secondary",
+      // badgeValue: "New",
+      active: true,
+      children: [
+        { path: "/ecl/list", title: "ECL Results", type: "link" },
+         { path: "/ecl/form", title: "Upload ECL File", type: "link" },
+         { path: "/ecl/customers", title: "ECL Customers", type: "link" },
       ],
     },
     // {

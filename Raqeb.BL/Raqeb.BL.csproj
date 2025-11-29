@@ -32,8 +32,10 @@
 		<PackageReference Include="Hangfire.AspNetCore" />
 		<PackageReference Include="MathNet.Numerics" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<PackageReference Include="Microsoft.Office.Interop.Excel" />
 		<PackageReference Include="PdfSharpCore" />
 		<PackageReference Include="ReportViewerCore.NETCore" />
+		<PackageReference Include="Sylvan.Data.Excel" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
 		<PackageReference Include="System.Linq.Dynamic.Core" />
 

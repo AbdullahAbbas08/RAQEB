@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Raqeb.DAL.databaseContext;
 
@@ -11,9 +12,11 @@ using Raqeb.DAL.databaseContext;
 namespace Raqeb.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251128045628_AddECL")]
+    partial class AddECL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -391,25 +394,6 @@ namespace Raqeb.DAL.Migrations
                     b.ToTable("ECL_CCF");
                 });
 
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclCureRateInput", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("CureRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("PoolId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EclCureRates");
-                });
-
             modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclCustomerInput", b =>
                 {
                     b.Property<int>("Id")
@@ -417,12 +401,6 @@ namespace Raqeb.DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Buk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BukGrade")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("CreditLimit")
                         .HasColumnType("decimal(18,2)");
@@ -433,101 +411,17 @@ namespace Raqeb.DAL.Migrations
                     b.Property<decimal?>("CurrentProvisionLevelPercent")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("CurrentRiskGrade")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CustomerNumber")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("DPD")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("EAD_t1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EAD_t2")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EAD_t3")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EAD_t4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EAD_t5")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t2")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t3")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t5")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t2")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t3")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t5")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Final")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t2")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t3")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t5")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("FacilityStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FinalStage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Group")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InitialRiskGrade")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("OutstandingBalance")
                         .HasColumnType("decimal(18,2)");
@@ -541,74 +435,18 @@ namespace Raqeb.DAL.Migrations
                     b.Property<string>("ProvisionType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("ScoreAtOrigination")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("ScoreAtOrigination")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("ScoreAtReporting")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("ScoreAtReporting")
+                        .HasColumnType("int");
 
                     b.Property<string>("Sector")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StageDpd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StageRating")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StageSicr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StageSpProvision")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("EclCustomers");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclDpdBucket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Bucket")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BucketGrade")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Dpd")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EclDpdBuckets");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclGradeSummary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("ECL")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Grade")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Outstanding")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EclGradeSummary");
                 });
 
             modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclMacroeconomicInput", b =>
@@ -628,53 +466,6 @@ namespace Raqeb.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EclMacroeconomics");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclScenarioWeight", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Scenario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("WeightPercent")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EclScenarioWeights");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclScoreGrade", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("RiskGrade")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RiskLevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ScoreGrade")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ScoreInterval")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Stage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EclScoreGrades");
                 });
 
             modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclSicrMatrixInput", b =>
@@ -697,31 +488,6 @@ namespace Raqeb.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EclSicrMatrixs");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL.EclStageSummary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("ECL")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("OSContribution")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Outstanding")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Stage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EclStageSummary");
                 });
 
             modelBuilder.Entity("Raqeb.Shared.Models.Group", b =>

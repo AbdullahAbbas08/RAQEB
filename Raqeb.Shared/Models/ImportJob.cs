@@ -9,5 +9,7 @@
         public DateTime? CompletedAt { get; set; } // وقت الانتهاء
         public string Status { get; set; } = "Pending"; // Pending / Processing / Success / Failed
         public string? ErrorMessage { get; set; } // في حالة الفشل
+        public string Type { get; set; }
+
     }
 }

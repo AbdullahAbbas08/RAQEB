@@ -156,6 +156,31 @@ export class UploadComponent {
                     this.uploading = false;
                 });
             }
+             else if (this.Type === 'ECL') {
+                // Handle LGD upload with single file
+                const fileParam: FileParameter = {
+                    data: this.selectedFile!,
+                    fileName: this.selectedFile!.name
+                };
+
+                this.swaggerClient.apiEclUploadPost(fileParam).subscribe(
+                    (response) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'تم بنجاح',
+                            text: 'تم رفع ملف ECL بنجاح',
+                            confirmButtonText: 'حسناً',
+                            confirmButtonColor: '#28a745'
+                        });
+                        this.resetFileInput();
+                    },
+                    (error) => {
+                        this.handleUploadError(error);
+                    }
+                ).add(() => {
+                    this.uploading = false;
+                });
+            }
         } catch (error) {
             this.handleUploadError(error);
         }

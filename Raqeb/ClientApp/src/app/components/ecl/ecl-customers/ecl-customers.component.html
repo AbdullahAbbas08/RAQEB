@@ -1,0 +1,154 @@
+<div class="ecl-customers-container">
+  <!-- Header -->
+  <div class="header">
+    <h1 class="title">ECL Customers</h1>
+    <p class="subtitle">Expected Credit Loss Management</p>
+  </div>
+
+  <!-- Search Filters -->
+  <div class="search-section">
+    <div class="search-filters">
+      <div class="filter-group">
+        <label for="customerNumber">Customer Number</label>
+        <input
+          id="customerNumber"
+          type="number"
+          [(ngModel)]="customerNumber"
+          (ngModelChange)="onSearchChange()"
+          placeholder="Enter customer number"
+          class="filter-input"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="customerName">Customer Name</label>
+        <input
+          id="customerName"
+          type="text"
+          [(ngModel)]="customerName"
+          (ngModelChange)="onSearchChange()"
+          placeholder="Enter customer name"
+          class="filter-input"
+        />
+      </div>
+
+      <button 
+        class="btn btn-clear" 
+        (click)="clearFilters()"
+        [disabled]="!customerNumber && !customerName"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading customers...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <p class="error-message">{{ error }}</p>
+    <button class="btn btn-retry" (click)="loadCustomers()">Retry</button>
+  </div>
+
+  <!-- Data Table -->
+  <div *ngIf="!loading && !error" class="table-container">
+    <!-- Results Info -->
+    <div class="results-info">
+      <p>
+       Showing {{ (currentPage - 1) * pageSize + 1 }} - {{ endRow }}
+
+        of {{ totalRows }} customers
+      </p>
+      
+      <div class="page-size-selector">
+        <label for="pageSize">Rows per page:</label>
+        <select 
+          id="pageSize"
+          [(ngModel)]="pageSize" 
+          (ngModelChange)="onPageSizeChange($event)"
+          class="page-size-select"
+        >
+          <option [value]="10">10</option>
+          <option [value]="20">20</option>
+          <option [value]="50">50</option>
+          <option [value]="100">100</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table class="customers-table">
+        <thead>
+          <tr>
+            <th>Customer Number</th>
+            <th>Customer Name</th>
+            <th>Outstanding</th>
+            <th>ECL Final</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customers" class="table-row">
+            <td>{{ customer.customerNumber }}</td>
+            <td>{{ customer.customerName }}</td>
+            <td class="amount">{{ customer.outstanding | number:'1.2-2' }}</td>
+            <td class="amount">{{ customer.ecL_Final | number:'1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Empty State -->
+      <div *ngIf="customers.length === 0" class="empty-state">
+        <p>No customers found matching your criteria.</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button 
+        class="btn btn-page" 
+        (click)="onPageChange(1)"
+        [disabled]="currentPage === 1"
+      >
+        First
+      </button>
+
+      <button 
+        class="btn btn-page" 
+        (click)="onPageChange(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+
+      <button
+        *ngFor="let page of getPageNumbers()"
+        class="btn btn-page"
+        [class.active]="page === currentPage"
+        (click)="onPageChange(page)"
+      >
+        {{ page }}
+      </button>
+
+      <button 
+        class="btn btn-page" 
+        (click)="onPageChange(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+
+      <button 
+        class="btn btn-page" 
+        (click)="onPageChange(totalPages)"
+        [disabled]="currentPage === totalPages"
+      >
+        Last
+      </button>
+    </div>
+  </div>
+</div>

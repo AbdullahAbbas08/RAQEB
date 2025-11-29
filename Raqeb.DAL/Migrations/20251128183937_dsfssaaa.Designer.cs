@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Raqeb.DAL.databaseContext;
 
@@ -11,9 +12,11 @@ using Raqeb.DAL.databaseContext;
 namespace Raqeb.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251128183937_dsfssaaa")]
+    partial class dsfssaaa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -463,58 +466,13 @@ namespace Raqeb.DAL.Migrations
                     b.Property<decimal>("ECL_Base")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("ECL_Base_t1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t2")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t3")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Base_t5")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("ECL_Best")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("ECL_Best_t1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t2")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t3")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Best_t5")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Final")
+                    b.Property<decimal>("ECL_Total")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("ECL_Worst")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t1")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t2")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t3")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t4")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ECL_Worst_t5")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("FacilityStartDate")

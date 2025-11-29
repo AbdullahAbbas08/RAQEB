@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Raqeb.AutoMapper;
 
@@ -19,6 +20,19 @@ namespace Raqeb.Services
             builder.Services.Configure<CookieTempDataProviderOptions>(options =>
             {
                 options.Cookie.IsEssential = true;
+            });
+
+            builder.Services.Configure<FormOptions>(o =>
+            {
+                o.MultipartBodyLengthLimit = long.MaxValue;
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartHeadersLengthLimit = int.MaxValue;
+            });
+
+
+            builder.WebHost.ConfigureKestrel(serverOptions =>
+            {
+                serverOptions.Limits.MaxRequestBodySize = long.MaxValue;
             });
 
             builder.Services.AddAutoMapper(typeof(ProfileMapping));
