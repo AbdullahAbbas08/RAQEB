@@ -26,6 +26,7 @@ import { ToastModule } from 'primeng/toast';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DashboardComponent } from './dashboard-component/dashboard.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return async (): Promise<any> => {

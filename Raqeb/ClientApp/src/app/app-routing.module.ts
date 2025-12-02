@@ -14,10 +14,16 @@ const routes: Routes = [
     path: 'auth/login',
     component: LoginComponent
   },
-  {
+  // {
+  //   canActivate: [AuthGuard],
+  //   path: "",
+  //   redirectTo: "LGD/list",
+  //   pathMatch: "full",
+  // },
+    {
     canActivate: [AuthGuard],
     path: "",
-    redirectTo: "LGD/list",
+    redirectTo: "main/dashboard",
     pathMatch: "full",
   },
   {
@@ -36,7 +42,7 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: "LGD/list",
+    redirectTo: "main/dashboard",
   },
 ];
 

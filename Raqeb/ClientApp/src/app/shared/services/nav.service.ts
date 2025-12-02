@@ -85,6 +85,16 @@ export class NavService implements OnDestroy {
       headTitle2: "ReadyToUseApps",
     },
     {
+      title: "dashboard",
+      icon: "widget",
+      type: "sub",
+      badgeType: "light-secondary",
+        children: [
+        { path: "/main/dashboard", title: "dashboard", type: "link" },
+      ],
+      active: true,
+    },
+    {
       title: "LGD",
       icon: "widget",
       type: "sub",

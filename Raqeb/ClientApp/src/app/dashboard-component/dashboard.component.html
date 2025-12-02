@@ -1,0 +1,54 @@
+<div class="dashboard-container">
+  <div class="modules-wrapper">
+    <div class="modules-grid">
+      <div *ngFor="let module of modules; let i = index" 
+           class="module-item"
+           [style.animation-delay]="(i * 0.15) + 's'">
+        
+        <div class="module-card-wrapper">
+          <div class="module-card"
+               [class.selected]="selectedModule === module.id"
+               [attr.data-color]="module.color"
+               (click)="handleModuleClick(module.id)">
+            
+            <div class="card-border" [attr.data-color]="selectedModule === module.id ? module.hoverColor : module.color">
+              <div class="card-content">
+                <div class="animated-bg" [attr.data-color]="module.color"></div>
+                
+                <div class="card-inner">
+                  <div class="icon-wrapper" 
+                       [class.selected]="selectedModule === module.id"
+                       [attr.data-color]="module.color">
+                    <span class="material-icons">{{ module.icon }}</span>
+                  </div>
+                  
+                  <h2 class="module-name">{{ module.name }}</h2>
+                  <p class="module-description">{{ module.fullName }}</p>
+                  
+                  <div class="click-hint" *ngIf="selectedModule !== module.id">
+                    Click to expand
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons" [class.visible]="selectedModule === module.id">
+            <button class="btn btn-upload" 
+                    [attr.data-color]="module.color"
+                    (click)="handleUpload(module.id)">
+              <span class="material-icons">upload</span>
+              Upload File
+            </button>
+
+            <button class="btn btn-results"
+                    (click)="handleViewResults(module.id)">
+              <span class="material-icons">description</span>
+              View Results
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
