@@ -25,7 +25,7 @@ namespace Raqeb.Services
             services.AddScoped<ILGDCalculatorRepository, LGDCalculatorRepository>();
             services.AddScoped<IPDRepository, PDRepository>();
             services.AddScoped<IEclRepository, EclRepository>();
-
+            services.AddScoped<IECLSEMPRepository, ECLSEMPRepository>();
         }
     }
 }

@@ -127,6 +127,18 @@ export class NavService implements OnDestroy {
          { path: "/ecl/customers", title: "ECL Customers", type: "link" },
       ],
     },
+     {
+      title: "ECL Simplify",
+      icon: "widget",
+      type: "sub",
+      badgeType: "light-secondary",
+      // badgeValue: "New",
+      active: true,
+      children: [
+        { path: "/ecl-simplify/form", title: "Upload ECL Simple File", type: "link" },
+        { path: "/ecl-simplify/list", title: "ECL Simple Results", type: "link" },
+      ],
+    },
     // {
     //   title: "MyActions",
     //   icon: "task",

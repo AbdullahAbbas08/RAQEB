@@ -18,6 +18,14 @@ export const content: Routes = [
     loadChildren: () => import("../../components/ecl/ecl.module").then((m) => m.EclModule),
   },
   {
+    path: "ecl-simplify",
+    loadChildren: () => import("../../ecl-simplify/ecl-simplify.module").then((m) => m.EclSimplifyModule),
+  },
+  {
+    path: "entry-page",
+    loadChildren: () => import("../../entry-page/entry-page.module").then((m) => m.EntryPageModule),
+  },
+  {
     path: "customer",
     loadChildren: () => import("../../components/dashboard/customer/customer.module").then((m) => m.CustomerModule),
   },

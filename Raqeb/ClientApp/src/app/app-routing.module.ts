@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     canActivate: [AuthGuard],
     path: "",
-    redirectTo: "LGD/list",
+    redirectTo: "entry-page/default",
     pathMatch: "full",
   },
   {
@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: "LGD/list",
+    redirectTo:  "entry-page/default",
   },
 ];
 

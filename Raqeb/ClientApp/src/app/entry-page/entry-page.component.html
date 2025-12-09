@@ -1,0 +1,90 @@
+<div class="entry-page-container">
+  <div class="header">
+    <h1> ECL SYSTEM </h1>
+    <p>Select Operation Type</p>
+  </div>
+
+  <div class="main-buttons">
+    <!-- ECL Simple Button -->
+    <div class="button-section">
+      <button class="main-btn ecl-simple-btn" (click)="toggleEclSimple()">
+        <span class="btn-icon">💎</span>
+        <span class="btn-text">ECL SIMPLE</span>
+      </button>
+
+      <!-- ECL Simple Options -->
+      <div class="sub-options" *ngIf="showEclSimpleOptions">
+        <button class="sub-btn upload-btn" (click)="navigateToEclSimpleUpload()">
+          <span class="btn-icon">📁</span>
+          <span class="btn-text">Upload</span>
+        </button>
+        <button class="sub-btn display-btn" (click)="navigateToEclSimpleDisplay()">
+          <span class="btn-icon">📊</span>
+          <span class="btn-text">Display</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Normal ECL Button -->
+    <div class="button-section">
+      <button class="main-btn normal-ecl-btn" (click)="toggleNormalEcl()">
+        <span class="btn-icon">🎯</span>
+        <span class="btn-text">NORMAL ECL</span>
+      </button>
+
+      <!-- Normal ECL Options -->
+      <div class="sub-options" *ngIf="showNormalEclOptions">
+        <!-- LGD Button -->
+        <div class="normal-ecl-section">
+          <button class="category-btn lgd-btn" (click)="toggleNormalEclSubOption('lgd')">
+            LGD
+          </button>
+          <div class="action-buttons" *ngIf="showNormalEclSubOptions['lgd']">
+            <button class="action-btn upload-btn" (click)="navigateToLgdUpload()">
+              <span class="btn-icon">📁</span>
+              <span class="btn-text">Upload</span>
+            </button>
+            <button class="action-btn display-btn" (click)="navigateToLgdDisplay()">
+              <span class="btn-icon">📊</span>
+              <span class="btn-text">Display</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PD Button -->
+        <div class="normal-ecl-section">
+          <button class="category-btn pd-btn" (click)="toggleNormalEclSubOption('pd')">
+            PD
+          </button>
+          <div class="action-buttons" *ngIf="showNormalEclSubOptions['pd']">
+            <button class="action-btn upload-btn" (click)="navigateToPdUpload()">
+              <span class="btn-icon">📁</span>
+              <span class="btn-text">Upload</span>
+            </button>
+            <button class="action-btn display-btn" (click)="navigateToPdDisplay()">
+              <span class="btn-icon">📊</span>
+              <span class="btn-text">Display</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ECL Button -->
+        <div class="normal-ecl-section">
+          <button class="category-btn ecl-btn" (click)="toggleNormalEclSubOption('ecl')">
+            ECL
+          </button>
+          <div class="action-buttons" *ngIf="showNormalEclSubOptions['ecl']">
+            <button class="action-btn upload-btn" (click)="navigateToEclUpload()">
+              <span class="btn-icon">📁</span>
+              <span class="btn-text">Upload</span>
+            </button>
+            <button class="action-btn display-btn" (click)="navigateToEclDisplay()">
+              <span class="btn-icon">📊</span>
+              <span class="btn-text">Display</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

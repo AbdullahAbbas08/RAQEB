@@ -10,7 +10,8 @@
             <div class="steps-section">
                 <div class="step" [class.active]="!isFilesSelected()">
                     <div class="step-number">1</div>
-                    <div class="step-text">Select File{{Type === 'PD' ? 's' : ''}}</div>
+                    <div class="step-text">Select File{{ (Type === 'PD' || Type === 'ECL_SIMP') ? 's' : ''}}
+                    </div>
                 </div>
                 <div class="step-connector"></div>
                 <div class="step" [class.active]="isFilesSelected() && !uploading">
@@ -33,15 +34,9 @@
                             PD File
                             <span class="optional-badge">اختياري</span>
                         </div>
-                        <div class="dropzone"
-                             [class.active]="pdFile"
-                             [class.disabled]="uploading">
-                            <input type="file"
-                                   class="file-input"
-                                   id="pdFileInput"
-                                   (change)="onPDFileSelected($event)"
-                                   [disabled]="uploading"
-                                   accept=".xlsx,.xlsm,.xls">
+                        <div class="dropzone" [class.active]="pdFile" [class.disabled]="uploading">
+                            <input type="file" class="file-input" id="pdFileInput" (change)="onPDFileSelected($event)"
+                                [disabled]="uploading" accept=".xlsx,.xlsm,.xls">
 
                             <div class="upload-placeholder" *ngIf="!pdFile">
                                 <i class="fa fa-cloud-upload"></i>
@@ -57,9 +52,7 @@
                                         <h4>{{ pdFile.name }}</h4>
                                         <p>{{ (pdFile.size / 1024 / 1024).toFixed(2) }} MB</p>
                                     </div>
-                                    <button class="remove-file"
-                                            *ngIf="!uploading"
-                                            (click)="removePDFile($event)">
+                                    <button class="remove-file" *ngIf="!uploading" (click)="removePDFile($event)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
@@ -73,15 +66,9 @@
                             Macro File
                             <span class="optional-badge">اختياري</span>
                         </div>
-                        <div class="dropzone"
-                             [class.active]="macroFile"
-                             [class.disabled]="uploading">
-                            <input type="file"
-                                   class="file-input"
-                                   id="macroFileInput"
-                                   (change)="onMacroFileSelected($event)"
-                                   [disabled]="uploading"
-                                   accept=".xlsx,.xlsm,.xls">
+                        <div class="dropzone" [class.active]="macroFile" [class.disabled]="uploading">
+                            <input type="file" class="file-input" id="macroFileInput"
+                                (change)="onMacroFileSelected($event)" [disabled]="uploading" accept=".xlsx,.xlsm,.xls">
 
                             <div class="upload-placeholder" *ngIf="!macroFile">
                                 <i class="fa fa-cloud-upload"></i>
@@ -97,9 +84,74 @@
                                         <h4>{{ macroFile.name }}</h4>
                                         <p>{{ (macroFile.size / 1024 / 1024).toFixed(2) }} MB</p>
                                     </div>
-                                    <button class="remove-file"
-                                            *ngIf="!uploading"
-                                            (click)="removeMacroFile($event)">
+                                    <button class="remove-file" *ngIf="!uploading" (click)="removeMacroFile($event)">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="Type === 'ECL_SIMP'">
+                <div class="files-grid">
+                    <!-- PD File -->
+                    <div class="file-section">
+                        <div class="file-section-label">
+                            Data File
+                            <span class="optional-badge">إجبارى</span>
+                        </div>
+                        <div class="dropzone" [class.active]="pdFile" [class.disabled]="uploading">
+                            <input type="file" class="file-input" id="pdFileInput" (change)="onPDFileSelected($event)"
+                                [disabled]="uploading" accept=".xlsx,.xlsm,.xls">
+
+                            <div class="upload-placeholder" *ngIf="!pdFile">
+                                <i class="fa fa-cloud-upload"></i>
+                                <h3>Drop Data file here</h3>
+                                <p>or</p>
+                                <button class="browse-btn">Browse Files</button>
+                                <div class="file-types">Supported: .xlsx, .xlsm, .xls</div>
+                            </div>
+                            <div class="file-selected" *ngIf="pdFile">
+                                <div class="file-preview">
+                                    <i class="fa fa-file-excel-o file-icon"></i>
+                                    <div class="file-details">
+                                        <h4>{{ pdFile.name }}</h4>
+                                        <p>{{ (pdFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+                                    </div>
+                                    <button class="remove-file" *ngIf="!uploading" (click)="removePDFile($event)">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Macro File -->
+                    <div class="file-section">
+                        <div class="file-section-label">
+                            Macro File
+                            <span class="optional-badge">إجبارى</span>
+                        </div>
+                        <div class="dropzone" [class.active]="macroFile" [class.disabled]="uploading">
+                            <input type="file" class="file-input" id="macroFileInput"
+                                (change)="onMacroFileSelected($event)" [disabled]="uploading" accept=".xlsx,.xlsm,.xls">
+
+                            <div class="upload-placeholder" *ngIf="!macroFile">
+                                <i class="fa fa-cloud-upload"></i>
+                                <h3>Drop Macro file here</h3>
+                                <p>or</p>
+                                <button class="browse-btn">Browse Files</button>
+                                <div class="file-types">Supported: .xlsx, .xlsm, .xls</div>
+                            </div>
+                            <div class="file-selected" *ngIf="macroFile">
+                                <div class="file-preview">
+                                    <i class="fa fa-file-excel-o file-icon"></i>
+                                    <div class="file-details">
+                                        <h4>{{ macroFile.name }}</h4>
+                                        <p>{{ (macroFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+                                    </div>
+                                    <button class="remove-file" *ngIf="!uploading" (click)="removeMacroFile($event)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
@@ -111,15 +163,9 @@
 
             <!-- LGD File Upload (Single File) -->
             <ng-container *ngIf="Type === 'LGD'">
-                <div class="dropzone"
-                     [class.active]="selectedFile"
-                     [class.disabled]="uploading">
-                    <input type="file"
-                           class="file-input"
-                           id="fileInput"
-                           (change)="onFileSelected($event)"
-                           [disabled]="uploading"
-                           accept=".xlsx,.xlsm,.xls">
+                <div class="dropzone" [class.active]="selectedFile" [class.disabled]="uploading">
+                    <input type="file" class="file-input" id="fileInput" (change)="onFileSelected($event)"
+                        [disabled]="uploading" accept=".xlsx,.xlsm,.xls">
 
                     <div class="upload-placeholder" *ngIf="!selectedFile">
                         <i class="fa fa-cloud-upload"></i>
@@ -135,9 +181,7 @@
                                 <h4>{{ selectedFile.name }}</h4>
                                 <p>{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
                             </div>
-                            <button class="remove-file"
-                                    *ngIf="!uploading"
-                                    (click)="selectedFile = null">
+                            <button class="remove-file" *ngIf="!uploading" (click)="selectedFile = null">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -145,15 +189,9 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="Type === 'ECL'">
-                <div class="dropzone"
-                     [class.active]="selectedFile"
-                     [class.disabled]="uploading">
-                    <input type="file"
-                           class="file-input"
-                           id="fileInput"
-                           (change)="onFileSelected($event)"
-                           [disabled]="uploading"
-                           accept=".xlsx,.xlsm,.xls">
+                <div class="dropzone" [class.active]="selectedFile" [class.disabled]="uploading">
+                    <input type="file" class="file-input" id="fileInput" (change)="onFileSelected($event)"
+                        [disabled]="uploading" accept=".xlsx,.xlsm,.xls">
 
                     <div class="upload-placeholder" *ngIf="!selectedFile">
                         <i class="fa fa-cloud-upload"></i>
@@ -169,9 +207,7 @@
                                 <h4>{{ selectedFile.name }}</h4>
                                 <p>{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
                             </div>
-                            <button class="remove-file"
-                                    *ngIf="!uploading"
-                                    (click)="selectedFile = null">
+                            <button class="remove-file" *ngIf="!uploading" (click)="selectedFile = null">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -180,10 +216,8 @@
             </ng-container>
 
             <div class="action-section">
-                <button class="calculate-btn"
-                        [class.processing]="uploading"
-                        (click)="uploadFile()"
-                        [disabled]="!canUpload() || uploading">
+                <button class="calculate-btn" [class.processing]="uploading" (click)="uploadFile()"
+                    [disabled]="!canUpload() || uploading">
                     <i class="fa" [ngClass]="uploading ? 'fa-spinner fa-spin' : 'fa-calculator'"></i>
                     <span>{{ uploading ? 'Processing...' : BtnTitle }}</span>
                 </button>

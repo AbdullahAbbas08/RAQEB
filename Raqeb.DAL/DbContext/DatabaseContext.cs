@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Raqeb.Shared.Models;
 using Raqeb.Shared.Models.ECL;
+using Raqeb.Shared.Models.ECL_SEMP;
 using Raqeb.Shared.Models.Raqeb.Shared.Models;
-using Raqeb.Shared.ViewModels.DTOs;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Claims;
 
@@ -34,11 +31,11 @@ namespace Raqeb.DAL.databaseContext
         public DbSet<PDObservedRate> PDObservedRates { get; set; }
         public DbSet<CustomerGrade> CustomerGrades { get; set; }
         public DbSet<PDMonthlyTransitionCell> PDMonthlyTransitionCells { get; set; }
-        public DbSet<PDYearlyAverageCell> PDYearlyAverageCells { get; set; } 
-        public DbSet<PDMonthlyRowStat> PDMonthlyRowStats { get; set; } 
-        public DbSet<PDCalibrationResult> PDCalibrationResults  { get; set; } 
-        public DbSet<PDLongRunAverage> PDLongRunAverages { get; set; } 
-        public DbSet<MacroeconomicInput> MacroeconomicInputs { get; set; } 
+        public DbSet<PDYearlyAverageCell> PDYearlyAverageCells { get; set; }
+        public DbSet<PDMonthlyRowStat> PDMonthlyRowStats { get; set; }
+        public DbSet<PDCalibrationResult> PDCalibrationResults { get; set; }
+        public DbSet<PDLongRunAverage> PDLongRunAverages { get; set; }
+        public DbSet<MacroeconomicInput> MacroeconomicInputs { get; set; }
         public DbSet<PDMarginalResult> PDMarginalResults { get; set; }
 
         public DbSet<MacroScenarioValue> MacroScenarioValues { get; set; }
@@ -58,6 +55,27 @@ namespace Raqeb.DAL.databaseContext
         public DbSet<EclGradeSummary> EclGradeSummary { get; set; }
         public DbSet<EclStageSummary> EclStageSummary { get; set; }
 
+        //ECL SIMP
+        public DbSet<ECLSEMPReceivableAging> ECLSEMPReceivableAgings { get; set; }
+        public DbSet<ECLSEMPWriteOffNotRecognized> ECLSEMPWriteOffNotRecognized { get; set; }
+        public DbSet<ECLSEMPReceivableAgingSummary> ECLSEMPReceivableAgingSummaries { get; set; }
+        public DbSet<ECLSEMPFlowRateMatrix> ECLSEMPFlowRateMatrices { get; set; }
+        public DbSet<ECLSEMPWeightedAvgFlowRateMatrix> ECLSEMPWeightedAvgFlowRateMatrices { get; set; }
+        public DbSet<ECLSEMPAvgLossRate> ECLSEMPAvgLossRates { get; set; }
+        public DbSet<ECLSEMPTTCLossRate> ECLSEMPTTCLossRates { get; set; }
+        public DbSet<ECLSEMPAnnualMeDatum> ECLSEMPAnnualMeData { get; set; }
+        public DbSet<ECLSEMPAnnualMeScenario> ECLSEMPAnnualMeScenarios { get; set; }
+        public DbSet<ECLSEMPStandardizedAnnualMeScenario> ECLSEMPStandardizedAnnualMeScenarios { get; set; }
+        public DbSet<ECLSEMPAnnualMeWeightedAvg> ECLSEMPAnnualMeWeightedAvgs { get; set; } 
+        public DbSet<ECLSEMPAssetCorrelation> ECLSEMPAssetCorrelations { get; set; }
+        public DbSet<ECLSEMPPITLossRate> ECLSEMPPITLossRates { get; set; }
+        public DbSet<ECLSEMPWeightsPreRecovery> ECLSEMPWeightsPreRecoveries { get; set; }
+        public DbSet<ECLSEMPRecoveriesPost360Plus> ECLSEMPRecoveriesPost360Plus { get; set; }
+
+        public DbSet<ECLSEMPRecoverabilityRatio> ECLSEMPRecoverabilityRatios { get; set; }
+        public DbSet<ECLSEMPRecoverabilityExpectedValue> ECLSEMPRecoverabilityExpectedValues { get; set; }
+        public DbSet<ECLSEMPRecoverabilityExpectedValueYearAvg> ECLSEMPRecoverabilityExpectedValueYearAvgs { get; set; }
+        public DbSet<ECLSEMPCorporateEclSummary> ECLSEMPCorporateEcls { get; set; }
 
 
         public virtual DbSet<User> Users { get; set; }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Raqeb.DAL.databaseContext;
 
@@ -11,9 +12,11 @@ using Raqeb.DAL.databaseContext;
 namespace Raqeb.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251208094948_a0xب")]
+    partial class a0xب
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -786,53 +789,6 @@ namespace Raqeb.DAL.Migrations
                     b.ToTable("ECLSEMPAnnualMeScenarios");
                 });
 
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPAnnualMeWeightedAvg", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ScenarioType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("WeightedAverage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPAnnualMeWeightedAvgs");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPAssetCorrelation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal?>("AssetCorrelation")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Bucket")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPAssetCorrelations");
-                });
-
             modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPAvgLossRate", b =>
                 {
                     b.Property<long>("Id")
@@ -861,52 +817,6 @@ namespace Raqeb.DAL.Migrations
                     b.ToTable("ECLSEMPAvgLossRates");
                 });
 
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPCorporateEclSummary", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AsOfDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Bucket")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("EclBase")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EclBest")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EclWeightedAverage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EclWorst")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("LossRatio")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ReceivableBalance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPCorporateEcls");
-                });
-
             modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPFlowRateMatrix", b =>
                 {
                     b.Property<long>("Id")
@@ -933,34 +843,6 @@ namespace Raqeb.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ECLSEMPFlowRateMatrices");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPPITLossRate", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal?>("Base")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Best")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Bucket")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("Worst")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPPITLossRates");
                 });
 
             modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPReceivableAging", b =>
@@ -1011,124 +893,6 @@ namespace Raqeb.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ECLSEMPReceivableAgingSummaries");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPRecoverabilityExpectedValue", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AsOfDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("ExpectedValue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPRecoverabilityExpectedValues");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPRecoverabilityExpectedValueYearAvg", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("AvgExpectedValue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsHistorical")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MonthsCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPRecoverabilityExpectedValueYearAvgs");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPRecoverabilityRatio", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AsOfDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Bucket")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("MonthYear")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("Ratio")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPRecoverabilityRatios");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPRecoveriesPost360Plus", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("AsOfDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPRecoveriesPost360Plus");
                 });
 
             modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPStandardizedAnnualMeScenario", b =>
@@ -1228,37 +992,6 @@ namespace Raqeb.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ECLSEMPWeightedAvgFlowRateMatrices");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPWeightsPreRecovery", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AsOfDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Bucket")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("Weight")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPWeightsPreRecoveries");
                 });
 
             modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPWriteOffNotRecognized", b =>

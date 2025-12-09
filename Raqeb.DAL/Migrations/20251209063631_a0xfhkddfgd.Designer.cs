@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Raqeb.DAL.databaseContext;
 
@@ -11,9 +12,11 @@ using Raqeb.DAL.databaseContext;
 namespace Raqeb.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251209063631_a0xfhkddfgd")]
+    partial class a0xfhkddfgd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -859,52 +862,6 @@ namespace Raqeb.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ECLSEMPAvgLossRates");
-                });
-
-            modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPCorporateEclSummary", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AsOfDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Bucket")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("EclBase")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EclBest")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EclWeightedAverage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EclWorst")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("LossRatio")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ReceivableBalance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ECLSEMPCorporateEcls");
                 });
 
             modelBuilder.Entity("Raqeb.Shared.Models.ECL_SEMP.ECLSEMPFlowRateMatrix", b =>

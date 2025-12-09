@@ -1,0 +1,51 @@
+<div class="list-container">
+  <div class="header">
+    <h2>Expected Credit Loss Simple</h2>
+    <div class="header-info" *ngIf="!loading && data">
+      <span class="info-item">Year: {{ year }}</span>
+      <span class="info-item">Month: {{ month }}</span>
+      <span class="info-item">As of Date: {{ formatDate(asOfDate) }}</span>
+    </div>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading data...</p>
+  </div>
+
+  <div class="error-message" *ngIf="error && !loading">
+    <p>{{ error }}</p>
+    <button (click)="loadData()">Retry</button>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading && !error && rows.length > 0">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Bucket</th>
+          <th>Receivable Balance</th>
+          <th>ECL Base</th>
+          <th>ECL Best</th>
+          <th>ECL Worst</th>
+          <th>ECL Weighted Average</th>
+          <th>Loss Ratio (%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows" [class.total-row]="isTotal(row.bucket)">
+          <td class="bucket-cell">{{ row.bucket }}</td>
+          <td class="number-cell">{{ formatNumber(row.receivableBalance) }}</td>
+          <td class="number-cell">{{ formatNumber(row.eclBase) }}</td>
+          <td class="number-cell">{{ formatNumber(row.eclBest) }}</td>
+          <td class="number-cell">{{ formatNumber(row.eclWorst) }}</td>
+          <td class="number-cell">{{ formatNumber(row.eclWeightedAverage) }}</td>
+          <td class="number-cell">{{ formatNumber(row.lossRatio) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="no-data" *ngIf="!loading && !error && rows.length === 0">
+    <p>No data available</p>
+  </div>
+</div>

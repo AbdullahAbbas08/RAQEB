@@ -1,0 +1,349 @@
+.entry-page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+  color: white;
+  animation: fadeIn 0.6s ease;
+
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.main-buttons {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.button-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: slideIn 0.6s ease;
+  
+  &:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+}
+
+.main-btn {
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 200px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  .btn-icon {
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  &:active {
+    transform: translateY(-2px);
+  }
+}
+
+.ecl-simple-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #5568d3, #5f3d8a);
+  }
+}
+
+.normal-ecl-btn {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #d97de6, #e04057);
+  }
+}
+
+.sub-options {
+  display: flex;
+  gap: 12px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.sub-btn {
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+  justify-content: center;
+
+  .btn-icon {
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.upload-btn {
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  color: #333;
+
+  &:hover {
+    background: linear-gradient(135deg, #8dd4d0, #f5c1d0);
+  }
+}
+
+.display-btn {
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #eba8d6, #8eaad9);
+  }
+}
+
+.normal-ecl-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.category-btn {
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  min-width: 180px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.lgd-btn {
+  background: linear-gradient(135deg, #ffecd2, #fcb69f);
+
+  &:hover {
+    background: linear-gradient(135deg, #f5d4b8, #f29d86);
+  }
+}
+
+.pd-btn {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+
+  &:hover {
+    background: linear-gradient(135deg, #87aeeb, #a8d5f7);
+  }
+}
+
+.ecl-btn {
+  background: linear-gradient(135deg, #d4fc79, #96e6a1);
+
+  &:hover {
+    background: linear-gradient(135deg, #bde65f, #7dd089);
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.action-btn {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 130px;
+  justify-content: center;
+
+  .btn-icon {
+    font-size: 1.1rem;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Animations
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .main-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .entry-page-container {
+    padding: 30px 15px;
+  }
+
+  .header {
+    margin-bottom: 35px;
+
+    h1 {
+      font-size: 2.2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .main-btn {
+    min-width: 100%;
+    max-width: 300px;
+  }
+
+  .category-btn {
+    min-width: 100%;
+  }
+
+  .sub-options,
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .sub-btn,
+  .action-btn {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .main-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+
+  .category-btn {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+}

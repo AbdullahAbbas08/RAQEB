@@ -50,24 +50,38 @@ export class UploadComponent {
     // Check if files are selected based on type
     isFilesSelected(): boolean {
         if (this.Type === 'PD') {
-            return !!(this.pdFile || this.macroFile); // أي ملف من الاثنين
+            return !!(this.pdFile || this.macroFile); // اختياريين
         }
+
+        if (this.Type === 'ECL_SIMP') {
+            return !!(this.pdFile && this.macroFile); // إجباريين
+        }
+
+        return !!this.selectedFile; // LGD / ECL
+    }
+
+    canUpload(): boolean {
+        if (this.Type === 'PD') {
+            return !!(this.pdFile || this.macroFile);
+        }
+
+        if (this.Type === 'ECL_SIMP') {
+            return !!(this.pdFile && this.macroFile);
+        }
+
         return !!this.selectedFile;
     }
 
-    // Check if upload can proceed
-    canUpload(): boolean {
-        if (this.Type === 'PD') {
-            return !!(this.pdFile || this.macroFile); // أي ملف من الاثنين
-        }
-        return !!this.selectedFile;
-    }
 
     async uploadFile() {
         if (!this.canUpload()) {
-            const message = this.Type === 'PD'
-                ? 'الرجاء اختيار ملف واحد على الأقل'
-                : 'الرجاء اختيار ملف أولاً';
+            const message =
+                this.Type === 'PD'
+                    ? 'الرجاء اختيار ملف واحد على الأقل'
+                    : this.Type === 'ECL_SIMP'
+                        ? 'الرجاء اختيار ملف Data وملف Macro'
+                        : 'الرجاء اختيار ملف أولاً';
+
 
             Swal.fire({
                 icon: 'warning',
@@ -131,7 +145,60 @@ export class UploadComponent {
                 ).add(() => {
                     this.uploading = false;
                 });
-            } else if (this.Type === 'LGD') {
+            }
+            if (this.Type === 'ECL_SIMP') {
+                // Handle PD upload with optional files
+                const pdFileParam: FileParameter | null = this.pdFile ? {
+                    data: this.pdFile,
+                    fileName: this.pdFile.name
+                } : null;
+
+                const macroFileParam: FileParameter | null = this.macroFile ? {
+                    data: this.macroFile,
+                    fileName: this.macroFile.name
+                } : null;
+
+                this.swaggerClient.apiECLSEMPUploadPost(pdFileParam, macroFileParam).subscribe(
+                    (response) => {
+                        if (response.success) {
+                            // رسالة ديناميكية حسب الملفات المرفوعة
+                            let successMessage = 'تم رفع ';
+                            if (pdFileParam && macroFileParam) {
+                                successMessage += 'ملفات Data و Macro بنجاح';
+                            } else if (pdFileParam) {
+                                successMessage += 'ملف Data بنجاح';
+                            }
+                            else {
+                                successMessage += 'ملف Macro بنجاح';
+                            }
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'تم بنجاح',
+                                text: successMessage,
+                                confirmButtonText: 'حسناً',
+                                confirmButtonColor: '#28a745'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'خطأ',
+                                text: response.message || 'حدث خطأ أثناء رفع الملفات',
+                                confirmButtonText: 'حسناً',
+                                confirmButtonColor: '#dc3545'
+                            });
+                        }
+                        this.resetFileInput();
+                    },
+                    (error) => {
+                        this.handleUploadError(error);
+                    }
+                ).add(() => {
+                    debugger
+                    this.uploading = false;
+                });
+            }
+            else if (this.Type === 'LGD') {
                 // Handle LGD upload with single file
                 const fileParam: FileParameter = {
                     data: this.selectedFile!,
@@ -156,7 +223,7 @@ export class UploadComponent {
                     this.uploading = false;
                 });
             }
-             else if (this.Type === 'ECL') {
+            else if (this.Type === 'ECL') {
                 // Handle LGD upload with single file
                 const fileParam: FileParameter = {
                     data: this.selectedFile!,

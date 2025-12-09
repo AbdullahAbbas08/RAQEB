@@ -1,0 +1,250 @@
+.header {
+  // 1. حاوية الهيدر الرئيسية
+  background: white;
+  padding: 24px 32px;
+  border-radius: 16px;
+  // ظل ناعم يعطي عمقاً
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  // شريط ملون علوي جمالي
+  position: relative;
+  overflow: hidden;
+  
+  display: flex;
+  justify-content: space-between; // العنوان يسار والمعلومات يمين
+  align-items: center;
+  flex-wrap: wrap; // للتجاوب مع الشاشات الصغيرة
+  gap: 20px;
+  margin-bottom: 32px;
+
+  // الخط الملون العلوي
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+  }
+
+  // 2. تنسيق العنوان
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800; // خط سميك جداً
+    color: #1e293b;
+    letter-spacing: -0.5px;
+    
+    // إضافة خط عمودي صغير بجانب العنوان
+    padding-left: 16px;
+    border-left: 4px solid #2563eb;
+  }
+
+  // 3. حاوية المعلومات
+  .header-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    // 4. تنسيق الكبسولات (Pills)
+    .info-item {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569; // لون نص رمادي داكن
+      background: #f8fafc; // خلفية رمادية فاتحة جداً
+      padding: 8px 16px;
+      border-radius: 50px; // شكل دائري كامل
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s ease;
+      cursor: default;
+
+      // إضافة نقطة ملونة قبل النص لجمالية أكثر
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #3b82f6; // لون النقطة أزرق
+        margin-right: 8px;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); // توهج خفيف حول النقطة
+      }
+
+      // تأثير عند مرور الماوس
+      &:hover {
+        background: #fff;
+        border-color: #3b82f6;
+        color: #2563eb;
+        transform: translateY(-2px); // يرتفع قليلاً للأعلى
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+      }
+    }
+  }
+}
+
+// Media Query for Mobile responsiveness
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .header-info {
+      width: 100%;
+      flex-wrap: wrap;
+      
+      .info-item {
+        width: 100%; // في الموبايل يأخذ العرض كامل
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.list-container {
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, sans-serif;
+
+  // إخفاء شريط التمرير للصفحة الرئيسية إذا ظهر
+  scrollbar-width: none; 
+  &::-webkit-scrollbar { display: none; }
+
+  .header {
+    // ... (نفس تنسيق الهيدر السابق الجميل)
+    margin-bottom: 32px;
+    background: white;
+    padding: 32px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    
+    h2 {
+      color: #1e293b;
+      font-size: 26px;
+      font-weight: 800;
+    }
+    
+    // ... باقي تنسيقات الهيدر
+  }
+
+  // ... (Spinner and Error styles remain the same)
+
+  // ==========================================
+  //  تنسيق الجدول الجديد (ألوان + بدون سكرول)
+  // ==========================================
+  .table-wrapper {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow-x: auto; // السماح بالتمرير
+    border: none;
+
+    // --- كود إخفاء شريط التمرير (السحر هنا) ---
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari and Opera */
+    }
+    // ------------------------------------------
+
+    .data-table {
+      width: 100%;
+      border-collapse: separate; // ضروري للـ border-radius
+      border-spacing: 0;
+
+      thead {
+        tr {
+          // خلفية متدرجة لرأس الجدول
+          background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+
+        th {
+          padding: 20px 24px;
+          color: white; // نص أبيض
+          font-weight: 600;
+          font-size: 13px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          border: none;
+          white-space: nowrap;
+
+          // جعل الزوايا العلوية دائرية للهيدر
+          &:first-child { border-top-left-radius: 16px; }
+          &:last-child { border-top-right-radius: 16px; }
+        }
+      }
+
+      tbody {
+        tr {
+          transition: transform 0.2s, background-color 0.2s;
+
+          // Zebra Striping: تلوين الصفوف الزوجية بلون خفيف جداً
+          &:nth-child(even) {
+            background-color: #f8fafc;
+          }
+
+          &:hover:not(.total-row) {
+            background-color: #e0f2fe; // لون Hover أزرق فاتح ومنعش
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            z-index: 10;
+            position: relative;
+            cursor: default;
+          }
+
+          td {
+            padding: 18px 24px;
+            color: #475569;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+
+            &.bucket-cell {
+              color: #334155;
+              font-weight: 700;
+            }
+
+            &.number-cell {
+              text-align: right;
+              font-family: 'SF Mono', 'Roboto Mono', monospace;
+              color: #0f172a; // لون أغمق للأرقام
+              font-weight: 500;
+            }
+          }
+
+          // صف المجموع (Total Row) بتصميم مميز
+          &.total-row {
+            // خلفية بلون أصفر/ذهبي فاتح جداً للتمييز (أو يمكن استخدام أزرق داكن)
+            background: #fffbeb; 
+            position: sticky;
+            bottom: 0;
+            z-index: 5;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+
+            &:hover {
+              background: #fef3c7;
+            }
+
+            td {
+              color: #92400e; // نص بلون بني/ذهبي داكن ليتماشى مع الخلفية
+              font-weight: 800;
+              font-size: 15px;
+              border-top: 2px solid #fcd34d; // خط علوي ذهبي
+              border-bottom: none;
+
+              &:first-child { border-bottom-left-radius: 16px; }
+              &:last-child { border-bottom-right-radius: 16px; }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .no-data {
+    // ...
+  }
+}
