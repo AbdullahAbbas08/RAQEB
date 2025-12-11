@@ -11,8 +11,11 @@ namespace Raqeb.Middlewares
             app.MapControllers();
             app.UseSession();
             //app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            // Angular deep links fallback (Production)
+            app.MapFallbackToFile("index.html");
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             else app.UseHsts();

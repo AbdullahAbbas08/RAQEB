@@ -1,9 +1,11 @@
 ﻿using MathNet.Numerics.Distributions;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Raqeb.Shared.Helpers; // لو عندك ApiResponse هنا أو في مكان تاني
 using Raqeb.Shared.Models;
 using Raqeb.Shared.Models.ECL_SEMP;
 using Raqeb.Shared.ViewModels.Responses;
+using System.Drawing;
 
 namespace Raqeb.BL.Repositories
 {
@@ -12,9 +14,7 @@ namespace Raqeb.BL.Repositories
         Task<ApiResponse<string>> UploadEclSempFileAsync(IFormFile file1, IFormFile file2);
         Task ClearEclSempTablesAsync();
         Task<CorporateEclTableDto> GetCorporateEclTableAsync(int year, int month);
-
-
-        // لو محتاج Endpoints تانية مستقبلاً
+        Task<byte[]> ExportCorporateEclToExcelAsync(int year, int month);
     }
 
     public class ECLSEMPRepository : IECLSEMPRepository
@@ -2224,12 +2224,11 @@ namespace Raqeb.BL.Repositories
         }
 
 
-
         public async Task<CorporateEclTableDto> GetCorporateEclTableAsync(int year, int month)
         {
             var rows = await _uow.DbContext.ECLSEMPCorporateEcls
                 .AsNoTracking()
-                .Where(x => x.Year == year && x.Month == month )
+                .Where(x => x.Year == year && x.Month == month)
                 .ToListAsync();
 
             static int BucketOrder(string b) => b switch
@@ -2266,6 +2265,97 @@ namespace Raqeb.BL.Repositories
                 }).ToList()
             };
         }
+
+        public async Task<byte[]> ExportCorporateEclToExcelAsync(int year, int month)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            // نجيب الداتا الجاهزة
+            var table = await GetCorporateEclTableAsync(year, month);
+
+            using var package = new ExcelPackage();
+            var ws = package.Workbook.Worksheets.Add("Corporate ECL");
+
+            int row = 1;
+            int col = 1;
+
+            // =========================
+            // 1) Header row
+            // =========================
+            ws.Cells[row, col++].Value = "BUCKET";
+            ws.Cells[row, col++].Value = "RECEIVABLE BALANCE";
+            ws.Cells[row, col++].Value = "ECL BASE";
+            ws.Cells[row, col++].Value = "ECL BEST";
+            ws.Cells[row, col++].Value = "ECL WORST";
+            ws.Cells[row, col++].Value = "ECL WEIGHTED AVERAGE";
+            ws.Cells[row, col++].Value = "LOSS RATIO (%)";
+
+            using (var headerRange = ws.Cells[row, 1, row, 7])
+            {
+                headerRange.Style.Font.Bold = true;
+                headerRange.Style.Font.Color.SetColor(Color.White);
+                headerRange.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                headerRange.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                headerRange.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(33, 100, 200)); // أزرق قريب من الصورة
+
+                headerRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                headerRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                headerRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                headerRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            }
+
+            // =========================
+            // 2) Data rows
+            // =========================
+            row++;
+            foreach (var r in table.Rows)
+            {
+                col = 1;
+
+                bool isTotalRow = string.Equals(r.Bucket, "Total", StringComparison.OrdinalIgnoreCase);
+
+                ws.Cells[row, col++].Value = r.Bucket;
+                ws.Cells[row, col++].Value = (double)r.ReceivableBalance;
+                ws.Cells[row, col++].Value = (double)r.EclBase;
+                ws.Cells[row, col++].Value = (double)r.EclBest;
+                ws.Cells[row, col++].Value = (double)r.EclWorst;
+                ws.Cells[row, col++].Value = (double)r.EclWeightedAverage;
+                ws.Cells[row, col++].Value = (double)r.LossRatio;   // مخزّنة كـ 15.23 مثلاً
+
+                var dataRange = ws.Cells[row, 1, row, 7];
+
+                // borders
+                dataRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                dataRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                dataRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                dataRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                // numbers format
+                ws.Cells[row, 2, row, 6].Style.Numberformat.Format = "#,##0.00";
+                ws.Cells[row, 7].Style.Numberformat.Format = "0.00"; // Loss Ratio (%)
+
+                // alignment
+                ws.Cells[row, 2, row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                // total row styling
+                if (isTotalRow)
+                {
+                    dataRange.Style.Font.Bold = true;
+                    dataRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    dataRange.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 244, 214)); // خلفية قريبة من الصف الأصفر
+                }
+
+                row++;
+            }
+
+            // Auto fit columns
+            ws.Cells[1, 1, row - 1, 7].AutoFitColumns();
+
+            return package.GetAsByteArray();
+        }
+
 
 
     }

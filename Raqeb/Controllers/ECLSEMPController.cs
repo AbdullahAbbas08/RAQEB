@@ -23,7 +23,7 @@ public class ECLSEMPController : ControllerBase
     [RequestFormLimits(MultipartBodyLengthLimit = long.MaxValue)]
     [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
 
-    public async Task<IActionResult> UploadEclSempFilesAsync( IFormFile inputData, IFormFile Macro)
+    public async Task<IActionResult> UploadEclSempFilesAsync(IFormFile inputData, IFormFile Macro)
     {
         var result = await _eclSempRepository.UploadEclSempFileAsync(inputData, Macro);
         return Ok(result);
@@ -33,9 +33,23 @@ public class ECLSEMPController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<CorporateEclTableDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetCorporateEcl()
     {
-        var table = await _eclSempRepository.GetCorporateEclTableAsync(year:2025, month:9);
+        var table = await _eclSempRepository.GetCorporateEclTableAsync(year: 2025, month: 9);
         return Ok(ApiResponse<CorporateEclTableDto>.SuccessResponse("OK", table));
     }
+
+
+
+    [HttpGet("export")]
+    public async Task<IActionResult> ExportCorporateEcl()
+    {
+        var bytes = await _eclSempRepository.ExportCorporateEclToExcelAsync(year: 2025, month: 9);
+
+        var fileName = $"Corporate_ECL_{2025}_{09:00}.xlsx";
+        const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+        return File(bytes, contentType, fileName);
+    }
+
 
 
 
